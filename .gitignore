@@ -1,32 +1,43 @@
-# Prerequisites
-*.d
+# Dumb OS crap
+.DS_Store
 
-# Compiled Object files
-*.slo
-*.lo
+# Build outputs
 *.o
-*.obj
+*.d
+lib*.so
+lib*.so.*
+.dep
+__pycache__
+*.pyc
+.mypy*
+.pyenv
+.dockerup
 
-# Precompiled Headers
-*.gch
-*.pch
+# Eclipse
+.metadata
+.settings
+.project
+.cproject
+.pydevproject
+.gdbinit
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Log files
+*.log
 
-# Fortran module files
-*.mod
-*.smod
+# Build folders
+build*
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# Python
+*.egg-info
+*.pyc
+.mypy_cache
 
-# Executables
-*.exe
-*.out
-*.app
+# We don't maintain a Vagrantfile as
+# part of our toolchain so don't check
+# it in if you are using one.
+.vagrant
+Vagrantfile
+
+# Sonarqube
+_tmp
+cache

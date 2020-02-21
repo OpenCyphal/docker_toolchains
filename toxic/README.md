@@ -49,7 +49,7 @@ services:
   - docker
 
 before_install:
-- docker pull uavcan/uavcan/toxic:py35-py38-sq
+- docker pull uavcan/toxic:py35-py38-sq
 
 script:
 - docker run --rm -v $TRAVIS_BUILD_DIR:/repo uavcan/uavcan/toxic:py35-py38-sq /bin/sh -c tox

@@ -52,24 +52,6 @@ apt-get -y install graphviz
 apt-get -y install curl
 apt-get -y install unzip
 
-pip3 install virtualenv
-pip3 install tox
-
-# a well-known workaround for npm install on docker
-# what. a. fail.
-mv /usr/local/lib/node_modules /usr/local/lib/node_modules.tmp && \
-mv /usr/local/lib/node_modules.tmp /usr/local/lib/node_modules && \
-npm install -g gh-pages
-
-# Sonarqube
-curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip 
-unzip -o $HOME/.sonar/sonar-scanner.zip -d $SONAR_SCANNER_HOME
-
-curl --create-dirs -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
-unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $SONAR_SCANNER_HOME
-
-rm -rf $HOME/.sonar
-
 echo "export PATH=$PATH" >> ~/.bashrc
 echo "export LANG=en_US.UTF-8" >> ~/.bashrc
 echo "export LANGUAGE=en_US:en" >> ~/.bashrc

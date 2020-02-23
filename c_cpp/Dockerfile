@@ -5,7 +5,7 @@ FROM ubuntu:18.04
 
 VOLUME /repo
 
-WORKDIR /tmp
+WORKDIR /repo
 
 
 ENV SONAR_SCANNER_VERSION 4.2.0.1873
@@ -25,4 +25,4 @@ RUN /provision.sh
 RUN /sonar_qube.sh
 RUN pip3 install virtualenv
 RUN pip3 install tox
-RUN npm install -g gh-pages
+RUN cd /tmp && npm install -g gh-pages

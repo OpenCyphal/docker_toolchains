@@ -39,8 +39,6 @@ apt-get -y install unzip
 # deadsnakes maintains a bunch of python versions for Ubuntu.
 add-apt-repository -y ppa:deadsnakes/ppa
 apt-get update
-apt-get -y install python3.5
-apt-get -y install python3.6
 apt-get -y install python3.7
 apt-get -y install python3.8
 apt-get -y install python3-pip

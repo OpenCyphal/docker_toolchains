@@ -2,7 +2,7 @@
 
 Builds and pushes a docker environment useful for testing and building Node.js applications that also use Python or Python applications that also use Node.js. This environment contains Node.js and a few other, essential JavaScript dependencies as well as series of python versions allowing multi-version tox testing locally and in CI services.
 
-All nodethon images include the ["sonarqube"](https://www.sonarqube.org) scanner. This scanner allows node and tox builds to upload coverage and analysis reports to a sonarqube instance.
+All *nodethon* images include the ["sonarqube"](https://www.sonarqube.org) scanner. This scanner allows node and tox builds to upload coverage and analysis reports to a sonarqube instance.
 
 ## Build and Push
 
@@ -19,9 +19,9 @@ nodethon        latest         d7ab132649d6
 ```
 ```
 # We use the range of python environments supported as the version tag.
-docker tag d7ab132649d6 uavcan/nodethon:py35-py38-node13-sq
+docker tag d7ab132649d6 uavcan/nodethon:node13-py37-py38
 docker login --username=yourhubusername
-docker push uavcan/nodethon:py35-py38-node13-sq
+docker push uavcan/nodethon:node13-py37-py38
 ```
 
 ## Testing out the container
@@ -29,13 +29,13 @@ docker push uavcan/nodethon:py35-py38-node13-sq
 Start an interactive session:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo uavcan/nodethon:py35-py38-node13-sq
+docker run --rm -it -v ${PWD}:/repo uavcan/nodethon:node13-py37-py38
 ```
 
 On MacOS you'll probably want to optimize `osxfs` with something like cached or delegated:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo:delegated uavcan/nodethon:py35-py38-node13-sq
+docker run --rm -it -v ${PWD}:/repo:delegated uavcan/nodethon:node13-py37-py38
 ```
 
 See ["Performance tuning for volume mounts"](https://docs.docker.com/docker-for-mac/osxfs-caching/) for details.
@@ -49,10 +49,10 @@ services:
   - docker
 
 before_install:
-- docker pull uavcan/nodethon:py35-py38-node13-sq
+- docker pull uavcan/nodethon:node13-py37-py38
 
 script:
-- docker run --rm -v $TRAVIS_BUILD_DIR:/repo uavcan/nodethon:py35-py38-node13-sq /bin/sh -c tox
+- docker run --rm -v $TRAVIS_BUILD_DIR:/repo uavcan/nodethon:node13-py37-py38 /bin/sh -c tox
 
 ```
 
@@ -66,7 +66,7 @@ Example pipeline.yml:
     plugins:
       - docker#v3.5.0:
           workdir: /repo
-          image: "uavcan/nodethon:py35-py38-node13-sq"
+          image: "uavcan/nodethon:node13-py37-py38"
           propagate-environment: true
           mount-ssh-agent: true
 ```

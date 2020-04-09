@@ -31,6 +31,7 @@ export ENV LANG=en_US.UTF-8
 export ENV LANGUAGE=en_US:en
 export ENV LC_ALL=en_US.UTF-8
 
+apt-get -y install apt-utils
 apt-get -y install software-properties-common
 apt-get -y install git
 apt-get -y install curl
@@ -45,7 +46,7 @@ apt-get -y install python3-pip
 pip3 install tox
 
 # Node.js (13), npm (6.14) and JS dependencies
-curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_13.x | bash -
 apt-get -y install nodejs
 node -v
 npm -v

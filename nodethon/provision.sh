@@ -46,6 +46,16 @@ apt-get -y install python3.8
 apt-get -y install python3-pip
 pip3 install tox
 
+# Node.js (13), npm (6.14) and JS dependencies
+curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+apt-get -y install nodejs
+node -v
+npm -v
+# install JSdoc to be used with sphinx-js
+npm install -g jsdoc
+# install Mocha JavaScript test framework
+npm install -g mocha
+
 # Sonarqube
 curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
 unzip -o $HOME/.sonar/sonar-scanner.zip -d $SONAR_SCANNER_HOME

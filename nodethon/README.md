@@ -14,8 +14,8 @@ docker build .
 ```
 docker images
 
-REPOSITORY      TAG            IMAGE ID
-nodethon        latest         d7ab132649d6
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+uavcan/nodethon     node13-py37-py38    5ff0aab8bfa9        xx minutes ago      867MB
 ```
 ```
 # We use the range of python environments supported as the version tag.

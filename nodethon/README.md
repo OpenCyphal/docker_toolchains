@@ -1,8 +1,8 @@
 # "Nodethon" (Node.js + Python) Docker
 
-Builds and pushes a docker environment for use with tox testing. This environment contains Node.js 13 and some other JavaScript dependencies, besides a series of python versions allowing multi-version tox testing locally and in CI services.
+Builds and pushes a docker environment useful for testing and building Node.js applications that also use Python or Python applications that also use Node.js. This environment contains Node.js and a few other, essential JavaScript dependencies as well as series of python versions allowing multi-version tox testing locally and in CI services.
 
-The "sq" suffix indicates that the ["sonarqube"](https://www.sonarqube.org) scanner has been included in the image. This scanner allows tox builds to upload coverage and other reports to a sonarqube instance.
+All nodethon images include the ["sonarqube"](https://www.sonarqube.org) scanner. This scanner allows node and tox builds to upload coverage and analysis reports to a sonarqube instance.
 
 ## Build and Push
 

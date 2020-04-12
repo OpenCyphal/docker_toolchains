@@ -52,8 +52,6 @@ node -v
 npm -v
 # install JSdoc to be used with sphinx-js
 npm install -g jsdoc
-# install Mocha JavaScript test framework
-npm install -g mocha
 
 # Sonarqube
 curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip

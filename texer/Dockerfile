@@ -37,3 +37,10 @@ RUN apt-get -y install python3-pip
 RUN python3 -m pip install --upgrade pip
 
 RUN python3 -m pip install pygments
+
+# install Powershell
+RUN apt-get -y install --no-install-recommends wget apt-transport-https
+RUN wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb && \
+  dpkg -i packages-microsoft-prod.deb
+RUN apt-get update && \
+  apt-get install -y powershell

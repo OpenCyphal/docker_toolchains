@@ -18,9 +18,11 @@ texer           latest         d7ab132649d6
 ```
 
 ```bash
-docker tag d7ab132649d6 uavcan/texer:ubuntu-16.04
+docker tag d7ab132649d6 uavcan/texer:ubuntu-18.04
+docker tag d7ab132649d6 uavcan/texer:latest
 docker login --username=yourhubusername
-docker push uavcan/texer:ubuntu-16.04
+docker push uavcan/texer:ubuntu-18.04
+docker push uavcan/texer:latest
 ```
 
 ## Testing out the container
@@ -28,13 +30,13 @@ docker push uavcan/texer:ubuntu-16.04
 Start an interactive session:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo uavcan/texer:ubuntu-16.04
+docker run --rm -it -v ${PWD}:/repo uavcan/texer:ubuntu-18.04
 ```
 
 On macintosh you'll probably want to optimize osxfs with something like cached or delegated:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo:delegated uavcan/texer:ubuntu-16.04
+docker run --rm -it -v ${PWD}:/repo:delegated uavcan/texer:ubuntu-18.04
 ```
 
 See ["Performance tuning for volume mounts"](https://docs.docker.com/docker-for-mac/osxfs-caching/) for details.
@@ -48,10 +50,10 @@ services:
   - docker
 
 before_install:
-- docker pull uavcan/texer:ubuntu-16.04
+- docker pull uavcan/texer:ubuntu-18.04
 
 script:
-- docker run --rm -v $TRAVIS_BUILD_DIR:/repo uavcan/uavcan/texer:ubuntu-16.04 /bin/sh -c ./compile.sh
+- docker run --rm -v $TRAVIS_BUILD_DIR:/repo uavcan/uavcan/texer:ubuntu-18.04 /bin/sh -c ./compile.sh
 
 ```
 
@@ -65,7 +67,7 @@ Example pipeline.yml:
     plugins:
       - docker#v3.5.0:
           workdir: /repo
-          image: "uavcan/texer:ubuntu-16.04"
+          image: "uavcan/texer:ubuntu-18.04"
           propagate-environment: true
           mount-ssh-agent: true
 ```

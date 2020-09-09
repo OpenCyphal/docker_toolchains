@@ -1,7 +1,7 @@
 #
-# Builds the c_cpp/ubuntu-16.04 toolchain container.
+# Builds the c_cpp/ubuntu-18.04 toolchain container.
 #
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 VOLUME /repo
 
@@ -40,7 +40,7 @@ RUN python3 -m pip install pygments
 
 # install Powershell
 RUN apt-get -y install --no-install-recommends wget apt-transport-https
-RUN wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb && \
+RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb && \
   dpkg -i packages-microsoft-prod.deb
 RUN apt-get update && \
   apt-get install -y powershell

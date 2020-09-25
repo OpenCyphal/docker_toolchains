@@ -51,6 +51,7 @@ apt-get -y install npm
 apt-get -y install graphviz
 apt-get -y install curl
 apt-get -y install unzip
+apt-get -y install zip
 
 echo "export PATH=$PATH" >> ~/.bashrc
 echo "export LANG=en_US.UTF-8" >> ~/.bashrc

@@ -15,13 +15,13 @@ docker build .
 docker images
 
 REPOSITORY      TAG            IMAGE ID
-toxic           latest         d7ab132649d6
+<none>          <none>         d7ab132649d6
 ```
 ```
 # We use the range of python environments supported as the version tag.
-docker tag d7ab132649d6 uavcan/toxic:py35-py38-sq
+docker tag d7ab132649d6 uavcan/toxic:py35-py39-sq
 docker login --username=yourhubusername
-docker push uavcan/toxic:py35-py38-sq
+docker push uavcan/toxic:py35-py39-sq
 ```
 
 ## Testing out the container
@@ -29,13 +29,13 @@ docker push uavcan/toxic:py35-py38-sq
 Start an interactive session:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo uavcan/toxic:py35-py38-sq
+docker run --rm -it -v ${PWD}:/repo uavcan/toxic:py35-py39-sq
 ```
 
 On macintosh you'll probably want to optimize osxfs with something like cached or delegated:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo:delegated uavcan/toxic:py35-py38-sq
+docker run --rm -it -v ${PWD}:/repo:delegated uavcan/toxic:py35-py39-sq
 ```
 
 See ["Performance tuning for volume mounts"](https://docs.docker.com/docker-for-mac/osxfs-caching/) for details.
@@ -49,10 +49,10 @@ services:
   - docker
 
 before_install:
-- docker pull uavcan/toxic:py35-py38-sq
+- docker pull uavcan/toxic:py35-py39-sq
 
 script:
-- docker run --rm -v $TRAVIS_BUILD_DIR:/repo uavcan/uavcan/toxic:py35-py38-sq /bin/sh -c tox
+- docker run --rm -v $TRAVIS_BUILD_DIR:/repo uavcan/uavcan/toxic:py35-py39-sq /bin/sh -c tox
 
 ```
 
@@ -66,7 +66,7 @@ Example pipeline.yml:
     plugins:
       - docker#v3.5.0:
           workdir: /repo
-          image: "uavcan/toxic:py35-py38-sq"
+          image: "uavcan/toxic:py35-py39-sq"
           propagate-environment: true
           mount-ssh-agent: true
 ```

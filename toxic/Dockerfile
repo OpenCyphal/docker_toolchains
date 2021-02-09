@@ -1,12 +1,16 @@
 #
 # Builds a docker image to use for tox runs.
 #
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 VOLUME /repo
 
 WORKDIR /repo
 
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get -y install apt-utils && apt-get -y install locales
+RUN locale-gen en_US.UTF-8
 
 ENV SONAR_SCANNER_VERSION 4.2.0.1873
 ENV LANG=en_US.UTF-8

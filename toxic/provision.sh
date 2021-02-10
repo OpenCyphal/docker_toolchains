@@ -19,17 +19,6 @@ set -o errexit
 set -o pipefail
 
 # +----------------------------------------------------------+
-export DEBIAN_FRONTEND=noninteractive
-
-apt-get update
-
-# setup locales in the container so Python can default to utf-8.
-apt-get -y install locales
-# from http://jaredmarkell.com/docker-and-locales/
-locale-gen en_US.UTF-8
-export ENV LANG=en_US.UTF-8
-export ENV LANGUAGE=en_US:en
-export ENV LC_ALL=en_US.UTF-8
 
 apt-get -y install software-properties-common
 apt-get -y install git
@@ -43,6 +32,7 @@ apt-get -y install python3.5
 apt-get -y install python3.6
 apt-get -y install python3.7
 apt-get -y install python3.8
+apt-get -y install python3.9
 apt-get -y install python3-pip
 pip3 install tox
 

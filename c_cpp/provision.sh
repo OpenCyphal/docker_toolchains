@@ -55,6 +55,7 @@ apt-get -y install zip
 apt-get -y install gcc-multilib
 apt-get -y install g++-multilib
 apt-get -y install qemu
+apt-get -y install ninja-build
 
 echo "export PATH=$PATH" >> ~/.bashrc
 echo "export LANG=en_US.UTF-8" >> ~/.bashrc

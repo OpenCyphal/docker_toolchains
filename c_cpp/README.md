@@ -19,9 +19,9 @@ REPOSITORY   TAG      IMAGE ID       CREATED              SIZE
 ```
 
 ```bash
-docker tag 736647481ad3 uavcan/c_cpp:ubuntu-18.04
+docker tag 736647481ad3 uavcan/c_cpp:ubuntu-20.04
 docker login --username=yourhubusername
-docker push uavcan/c_cpp:ubuntu-18.04
+docker push uavcan/c_cpp:ubuntu-20.04
 ```
 
 Use this pattern for tags:
@@ -35,7 +35,7 @@ uavcan/[toolchain]:[build environment]
 To login to an interactive session do:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo uavcan/c_cpp:ubuntu-18.04
+docker run --rm -it -v ${PWD}:/repo uavcan/c_cpp:ubuntu-20.04
 ```
 
 ## Toolchain Documentation
@@ -71,10 +71,10 @@ services:
   - docker
 
 before_install:
-- docker pull uavcan/c_cpp:ubuntu-18.04
+- docker pull uavcan/c_cpp:ubuntu-20.04
 
 script:
-- docker run --rm -v $TRAVIS_BUILD_DIR:/repo uavcan/c_cpp:ubuntu-18.04 /bin/sh -c mybuild_command
+- docker run --rm -v $TRAVIS_BUILD_DIR:/repo uavcan/c_cpp:ubuntu-20.04 /bin/sh -c mybuild_command
 
 ```
 
@@ -88,7 +88,7 @@ Example pipeline.yml:
     plugins:
       - docker#v3.5.0:
           workdir: /repo
-          image: "uavcan/c_cpp:ubuntu-18.04"
+          image: "uavcan/c_cpp:ubuntu-20.04"
           propagate-environment: true
           mount-ssh-agent: true
 ```

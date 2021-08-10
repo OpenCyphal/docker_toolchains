@@ -26,6 +26,7 @@ RUN apt-get -y install software-properties-common
 RUN apt-get -y install apt-utils
 RUN apt-get -y install texlive-full
 RUN apt-get -y install lyx
+RUN apt-get -y install inkscape
 RUN apt-get -y install git
 
 RUN add-apt-repository -y ppa:deadsnakes/ppa
@@ -44,3 +45,4 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsof
   dpkg -i packages-microsoft-prod.deb
 RUN apt-get update && \
   apt-get install -y powershell
+

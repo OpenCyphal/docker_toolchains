@@ -33,6 +33,7 @@ apt-get -y install python3.6
 apt-get -y install python3.7
 apt-get -y install python3.8
 apt-get -y install python3.9
+apt-get -y install python3.10
 apt-get -y install python3-pip
 pip3 install tox
 

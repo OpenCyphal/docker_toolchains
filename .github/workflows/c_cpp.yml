@@ -2,26 +2,34 @@ name: ghcr.io/opencyphal/c_cpp container build and publish.
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", ]
   pull_request:
     branches: [ "main" ]
-defaults:
-  run:
-    working-directory: ./c_cpp
+
+env:
+  ORG_NAMESPACE: opencyphal
+  IMAGE_NAME: c_cpp
+  LATEST_TAG: ubuntu-20.04
 
 jobs:
 
-  build:
+  build_and_publish:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: pull
-      run: docker pull ghcr.io/opencyphal/c_cpp:ubuntu-20.04
-    - name: build
-      run: docker build . --tag ghcr.io/opencyphal/c_cpp:ubuntu-20.04
-    - name: push
+    - name: dryrun-build
+      if: ${{ github.event_name == 'pull_request' }}
+      run: docker build ./c_cpp
+    - name: build-and-push
       if: ${{ github.event_name != 'pull_request' }}
-      run: docker push ghcr.io/opencyphal/c_cpp:ubuntu-20.04
+      uses: macbre/push-to-ghcr@master
+      with:
+        context: ./${{ env.IMAGE_NAME }}
+        dockerfile: ./${{ env.IMAGE_NAME }}/Dockerfile
+        image_name: ${{ env.ORG_NAMESPACE }}/${{ env.IMAGE_NAME }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        image_tag: ${{ env.LATEST_TAG }}
+        repository: ghcr.io

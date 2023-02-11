@@ -3,6 +3,8 @@
 #
 FROM ubuntu:20.04
 
+LABEL org.opencontainers.image.description "Provides a consistent build and test environment for development, continuous-integration, and test automation of OpenCyphal C and C++ based projects."
+
 VOLUME /repo
 
 WORKDIR /repo

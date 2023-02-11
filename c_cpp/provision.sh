@@ -32,11 +32,11 @@ export ENV LANGUAGE=en_US:en
 export ENV LC_ALL=en_US.UTF-8
 
 apt-get -y install software-properties-common
+add-apt-repository -y ppa:deadsnakes/ppa
 apt-get update
 apt-get -y install apt-utils
-apt-get -y install python3
+apt-get -y install python3.10
 apt-get -y install python3-pip
-apt-get -y install python3-venv
 apt-get -y install cmake
 apt-get -y install git
 apt-get -y install clang
@@ -56,7 +56,6 @@ apt-get -y install qemu
 apt-get -y install ninja-build
 apt-get -y install can-utils
 
-echo "export PATH=$PATH" >> ~/.bashrc
 echo "export LANG=en_US.UTF-8" >> ~/.bashrc
 echo "export LANGUAGE=en_US:en" >> ~/.bashrc
 echo "export LC_ALL=en_US.UTF-8" >> ~/.bashrc

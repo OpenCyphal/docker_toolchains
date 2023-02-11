@@ -1,33 +1,35 @@
 # C/C++ Toolchain Docker
 
-The `uavcan/c_cpp` docker image provides a consistent build and test environment
+The `opencyphal/c_cpp` docker image provides a consistent build and test environment
 for development, continuous-integration, and test automation of C and C++ based projects.
 
 ## Manual Build and Push
 
-These instructions are for maintainers with permissions to push to the [uavcan organization on Docker Hub](https://cloud.docker.com/u/uavcan).
+These instructions are for maintainers with permissions to push to the
+[OpenCyphal organization on Github](https://github.com/OpenCyphal/). Normally the container should be published by
+a github action but these instructions provide a way to manually update the container from any developer environment.
+
+First create a temporary (7-day expiration please) personal access token (classic) with write:packages and read:packages
+scope. See [this github help page](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+for instructions.
+
+Next, make sure you can login:
 
 ```bash
-docker build .
+export FGP = (fine-grained permission for OpenCyphal organization)
+echo $FGP | docker login ghcr.io -u (github username) --password-stdin
 ```
 
-```bash
-docker images
+... now build:
 
-REPOSITORY   TAG      IMAGE ID       CREATED              SIZE
-<none>       <none>   736647481ad3   About a minute ago   1GB
+```bash
+docker build -t ghcr.io/opencyphal/c_cpp:ubuntu-20.04 .
 ```
 
-```bash
-docker tag 736647481ad3 uavcan/c_cpp:ubuntu-20.04
-docker login --username=yourhubusername
-docker push uavcan/c_cpp:ubuntu-20.04
-```
-
-Use this pattern for tags:
+... and finally, push.
 
 ```bash
-uavcan/[toolchain]:[build environment]
+docker push ghcr.io/opencyphal/c_cpp:ubuntu-20.04
 ```
 
 ## Testing out the container
@@ -35,7 +37,7 @@ uavcan/[toolchain]:[build environment]
 To login to an interactive session do:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo uavcan/c_cpp:ubuntu-20.04
+docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/c_cpp:ubuntu-20.04
 ```
 
 ## Toolchain Documentation
@@ -52,8 +54,8 @@ Upload the results:
 
 ```bash
 sonar-scanner \
-  -Dsonar.organization=uavcan \
-  -Dsonar.projectKey=UAVCAN_myproject \
+  -Dsonar.organization=OpenCyphal \
+  -Dsonar.projectKey=OpenCyphal_myproject \
   -Dsonar.sources=. \
   -Dsonar.host.url=https://sonarcloud.io \
   -Dsonar.cfamily.build-wrapper-output=bw-output \
@@ -62,33 +64,13 @@ sonar-scanner \
 
 A [CMake example on github](https://github.com/SonarSource/sonarcloud_example_cpp-cmake-linux-otherci)
 
-## Travis CI
+## Github Actions
 
-You can use this in your .travis.yml like this:
+You can use this in your workflow yaml like this:
 
 ```none
-services:
-  - docker
-
-before_install:
-- docker pull uavcan/c_cpp:ubuntu-20.04
-
-script:
-- docker run --rm -v $TRAVIS_BUILD_DIR:/repo uavcan/c_cpp:ubuntu-20.04 /bin/sh -c mybuild_command
-
-```
-
-## BuildKite
-
-Example pipeline.yml:
-
-```yaml
-- label: ":github: my containerized build"
-    command: "my_build_command"
-    plugins:
-      - docker#v3.5.0:
-          workdir: /repo
-          image: "uavcan/c_cpp:ubuntu-20.04"
-          propagate-environment: true
-          mount-ssh-agent: true
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    container: ghcr.io/opencyphal/c_cpp:ubuntu-20.04
 ```

@@ -24,4 +24,4 @@ jobs:
       run: docker build . --tag ghcr.io/opencyphal/c_cpp:ubuntu-20.04
     - name: push
       if: ${{ github.event_name != 'pull_request' }}
-      run: docker push ghcr.io/OpenCyphal/c_cpp:ubuntu-20.04
+      run: docker push ghcr.io/opencyphal/c_cpp:ubuntu-20.04

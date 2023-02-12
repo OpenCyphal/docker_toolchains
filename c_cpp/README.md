@@ -3,6 +3,12 @@
 The `opencyphal/c_cpp` docker image provides a consistent build and test environment
 for development, continuous-integration, and test automation of C and C++ based projects.
 
+## Official Release
+
+To release a new build of this container simply create a [new github release](https://github.com/OpenCyphal/docker_toolchains/releases/new)
+that starts with the ubuntu version container you want to release and ends with "-c_cpp". For example `v20.04-c_cpp`
+will cause the github workflow to rebuild and push the `opencyphal/c_cpp:ubuntu-20.04` container.
+
 ## Manual Build and Push
 
 These instructions are for maintainers with permissions to push to the
@@ -63,14 +69,3 @@ sonar-scanner \
 ```
 
 A [CMake example on github](https://github.com/SonarSource/sonarcloud_example_cpp-cmake-linux-otherci)
-
-## Github Actions
-
-You can use this in your workflow yaml like this:
-
-```none
-jobs:
-  my-job:
-    runs-on: ubuntu-latest
-    container: ghcr.io/opencyphal/c_cpp:ubuntu-20.04
-```

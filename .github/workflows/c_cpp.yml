@@ -25,7 +25,7 @@ jobs:
       if: ${{ github.event_name == 'pull_request' }}
       run: docker build ./c_cpp
     - name: build-and-push
-      if: ${{ github.event_name == 'release' && contains(github.ref, "20.04-c_cpp") }}
+      if: ${{ github.event_name == 'release' && contains(github.ref, '20.04-c_cpp') }}
       uses: macbre/push-to-ghcr@master
       with:
         context: ./${{ env.IMAGE_NAME }}

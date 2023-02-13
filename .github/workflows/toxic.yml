@@ -25,7 +25,7 @@ jobs:
       if: ${{ github.event_name == 'pull_request' }}
       run: docker build ./${{ env.IMAGE_NAME }}
     - name: build-and-push
-      if: ${{ github.event_name == 'release' && startsWith(github.ref, ${{ env.IMAGE_VERSION_PREFIX }} ) }}
+      if: ${{ github.event_name == 'release' && startsWith(github.ref, env.IMAGE_VERSION_PREFIX) }}
       uses: macbre/push-to-ghcr@master
       with:
         context: ./${{ env.IMAGE_NAME }}

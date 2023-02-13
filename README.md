@@ -8,23 +8,24 @@ organization on Github](https://github.com/orgs/OpenCyphal/packages) and are use
 by the build automation for OpenCyphal projects. You can use these same
 containers to get consistent build results in your local development environment.
 
-### opencyphal/c_cpp
+To allow hosting of multiple container builds from a single repo each toolchain container
+is assigned a prefix. For every release event in this repo the workflow triggered is based
+on that prefix in the release tag. For example, by creating a release with the tag `tsv18.4.1-alpha`
+the release workflow for the `toolshed` container will be triggered.
 
-[![ghcr.io/opencyphal/c_cpp container build and publish.](https://github.com/OpenCyphal/docker_toolchains/actions/workflows/c_cpp.yml/badge.svg)](https://github.com/OpenCyphal/docker_toolchains/actions/workflows/c_cpp.yml)
+### opencyphal/toolshed:tsv
 
-The [Open Cyphal c_cpp
-container](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/c_cpp)
-is based on various Ubuntu releases with the container tag being the latest build
-of our c_cpp container based on a given release. This container provides the
-necessary compilers and utilities to build and run OpenCyphal C or C++ projects
+The [Open Cyphal toolshed
+container](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed)
+is based on Ubuntu and provides the necessary compilers and utilities to build and run OpenCyphal C or C++ projects
 like [libcanard](https://github.com/OpenCyphal/libcanard) and
 [Nunavut](https://github.com/OpenCyphal/nunavut).
 
 #### Supported Versions
 
 | tag      | Python | Gcc | Clang | Cmake | Other Utilities |
-|----------|--------|-----|-------|-------|-------|
-| [ubuntu-20.04](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/c_cpp/69896735?tag=ubuntu-20.04) | 3.10 | 9.3.0 | 10.0.0 | 3.16.3 | <ul><li>qemu</li><li>can-utils</li><li>sonar-scanner</li></ul> |
+|----------|--------|-----|-------|-------|-----------------|
+| [tsv20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed/70028521?tag=tsv20.4.1) | 3.10 | 9.3.0 | 10.0.0 | 3.16.3 | <ul><li>qemu</li><li>can-utils</li><li>sonar-scanner</li></ul> |
 
 You can use this in your workflow yaml like this:
 
@@ -32,14 +33,51 @@ You can use this in your workflow yaml like this:
 jobs:
   my-job:
     runs-on: ubuntu-latest
-    container: ghcr.io/opencyphal/c_cpp:ubuntu-20.04
+    container: ghcr.io/opencyphal/toolshed:tsv20.4.1
 ```
 
 
-### opencyphal/texer
+### opencyphal/texer:tev
 
- [LaTeX](https://www.latex-project.org/) toolchain. Will be migrated to github actions soon, stay tuned!
+The [Open Cyphal texer
+container](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/texer)
+is based on Ubuntu and provides the necessary compilers and utilities to author and publish OpenCyphal [LaTeX](https://www.latex-project.org/) documents like [the specification](https://github.com/OpenCyphal/specification).
 
- ### opencyphal/toxic
+#### Supported Versions
 
- Python toolchain. Will be migrated to github actions soon. Stay tuned!
+| tag      | Python | Tex Live | git | Other Utilities |
+|----------|--------|----------|-----|-----------------|
+| [tev20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/texer/70028521?tag=tsv20.4.1) | 3.11 | 2019 | 2.25.1 | <ul><li>python pygments</li><li>lyx</li><li>inkscape</li></ul> |
+
+You can use this in your workflow yaml like this:
+
+```none
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    container: ghcr.io/opencyphal/texer:tev20.4.1
+```
+
+
+
+ ### opencyphal/toxic:txv
+
+
+The [Open Cyphal toxic
+container](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic)
+is based on Ubuntu and provides all modern Python3 distributions, pip, tox, and nox. It can be used to develop, test, build, and release Python projects like [nunavut](https://github.com/OpenCyphal/nunavut), [pydsdl](https://github.com/OpenCyphal/pydsdl), and [pycyphal](https://github.com/OpenCyphal/pycyphal).
+
+#### Supported Versions
+
+| tag      | Base Python | Python Versions | Tox | Nox | pip | Other Utilities |
+|----------|-------------|-----------------|-----|-----|-----|-----------------|
+| [txv20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic/70031935?tag=txv20.4.1) | 3.8 | 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | (not available) | 20.0.2 | <ul><li>sonar-scanner</li></ul> |
+
+You can use this in your workflow yaml like this:
+
+```none
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    container: ghcr.io/opencyphal/toxic:txv20.4.1
+```

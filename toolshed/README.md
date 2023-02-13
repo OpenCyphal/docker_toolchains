@@ -1,13 +1,16 @@
-# C/C++ Toolchain Docker
+# toolshed (tsv): The OpenCyphal C and C++ toolchain container.
 
-The `opencyphal/c_cpp` docker image provides a consistent build and test environment
+The `opencyphal/toolshed` docker image provides a consistent build and test environment
 for development, continuous-integration, and test automation of C and C++ based projects.
 
 ## Official Release
 
 To release a new build of this container simply create a [new github release](https://github.com/OpenCyphal/docker_toolchains/releases/new)
-that starts with the ubuntu version container you want to release and ends with "-c_cpp". For example `v20.04-c_cpp`
-will cause the github workflow to rebuild and push the `opencyphal/c_cpp:ubuntu-20.04` container.
+that starts with `tsv`, uses the Ubuntu major and minor version, and uses an monotonically increasing "patch" version.
+For example `tsv20.4.1`will cause the Github workflow to rebuild and push the `opencyphal/toolshed` container with the
+tag `tsv20.4.1`.
+
+***PLEASE UPDATE THE TOP-LEVEL README.md FOR EACH NEW RELEASE***
 
 ## Manual Build and Push
 
@@ -26,16 +29,16 @@ export FGP = (fine-grained permission for OpenCyphal organization)
 echo $FGP | docker login ghcr.io -u (github username) --password-stdin
 ```
 
-... now build:
+... now build (where x is the next version number for the container):
 
 ```bash
-docker build -t ghcr.io/opencyphal/c_cpp:ubuntu-20.04 .
+docker build -t ghcr.io/opencyphal/toolshed:tsv20.4.x .
 ```
 
 ... and finally, push.
 
 ```bash
-docker push ghcr.io/opencyphal/c_cpp:ubuntu-20.04
+docker push ghcr.io/opencyphal/toolshed:tsv20.4.x
 ```
 
 ## Testing out the container
@@ -43,7 +46,7 @@ docker push ghcr.io/opencyphal/c_cpp:ubuntu-20.04
 To login to an interactive session do:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/c_cpp:ubuntu-20.04
+docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toolshed:tsv20.4.x
 ```
 
 ## Toolchain Documentation

@@ -1,0 +1,35 @@
+name: ghcr.io/opencyphal/toolshed container build and publish.
+
+on:
+  release:
+    types: [ published ]
+    
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  ORG_NAMESPACE: opencyphal
+  IMAGE_NAME: toolshed
+  IMAGE_VERSION_PREFIX: txv
+
+jobs:
+
+  build_and_publish:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: dryrun-build
+      if: ${{ github.event_name == 'pull_request' }}
+      run: docker build ./${{ env.IMAGE_NAME }}
+    - name: build-and-push
+      if: ${{ github.event_name == 'release' && startsWith(github.ref, ${{ env.IMAGE_VERSION_PREFIX }}) }}
+      uses: macbre/push-to-ghcr@master
+      with:
+        context: ./${{ env.IMAGE_NAME }}
+        dockerfile: ./${{ env.IMAGE_NAME }}/Dockerfile
+        image_name: ${{ env.ORG_NAMESPACE }}/${{ env.IMAGE_NAME }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        repository: ghcr.io

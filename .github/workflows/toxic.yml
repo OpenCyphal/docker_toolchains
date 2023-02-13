@@ -10,7 +10,7 @@ on:
 env:
   ORG_NAMESPACE: opencyphal
   IMAGE_NAME: toxic
-  IMAGE_VERSION_PREFIX: txv
+  IMAGE_VERSION_PREFIX: tx
 
 jobs:
 
@@ -21,11 +21,16 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: process event
+      id: process_event
+      uses: olegtarasov/get-tag@v2.1.2
+      with:
+        tagRegex: "(${{ env.IMAGE_VERSION_PREFIX }}).*"
     - name: dryrun-build
-      if: ${{ github.event_name == 'pull_request' }}
+      if: ${{ github.event_name == 'pull_request' || ( github.event_name == 'release' && startsWith( steps.process_event.outputs.tag, env.IMAGE_VERSION_PREFIX ) && github.event.release.prerelease ) }}
       run: docker build ./${{ env.IMAGE_NAME }}
     - name: build-and-push
-      if: ${{ github.event_name == 'release' && startsWith(github.ref, env.IMAGE_VERSION_PREFIX) }}
+      if: ${{ github.event_name == 'release' && startsWith( steps.process_event.outputs.tag, env.IMAGE_VERSION_PREFIX ) && !github.event.release.prerelease }}
       uses: macbre/push-to-ghcr@master
       with:
         context: ./${{ env.IMAGE_NAME }}

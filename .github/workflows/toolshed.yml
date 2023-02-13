@@ -26,15 +26,6 @@ jobs:
       uses: olegtarasov/get-tag@v2.1.2
       with:
         tagRegex: "(${{ env.IMAGE_VERSION_PREFIX }}).*"
-    - name: echo environment
-      run: |
-          echo "::group::environment"
-          echo "ORG_NAMESPACE=${{ env.ORG_NAMESPACE }}"
-          echo "IMAGE_NAME=${{ env.IMAGE_NAME }}"
-          echo "IMAGE_VERSION_PREFIX=${{ env.IMAGE_VERSION_PREFIX }}"
-          echo "GIT_TAG_NAME=${{ steps.process_event.outputs.tag }}"
-          echo "::debug event=${{ toJSON( github.event ) }}"
-          echo "::endgroup::"
     - name: dryrun-build
       if: ${{ github.event_name == 'pull_request' || ( github.event_name == 'release' && startsWith( steps.process_event.outputs.tag, env.IMAGE_VERSION_PREFIX ) && github.event.release.prerelease ) }}
       run: docker build ./${{ env.IMAGE_NAME }}

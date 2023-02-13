@@ -36,10 +36,10 @@ jobs:
           echo "::debug event=${{ toJSON( github.event ) }}"
           echo "::endgroup::"
     - name: dryrun-build
-      if: ${{ github.event_name == 'pull_request' }}
+      if: ${{ github.event_name == 'pull_request' || ( github.event_name == 'release' && startsWith( steps.process_event.outputs.tag, env.IMAGE_VERSION_PREFIX ) && github.event.release.prerelease ) }}
       run: docker build ./${{ env.IMAGE_NAME }}
     - name: build-and-push
-      if: ${{ github.event_name == 'release' && startsWith( steps.process_event.outputs.tag env.IMAGE_VERSION_PREFIX ) }}
+      if: ${{ github.event_name == 'release' && startsWith( steps.process_event.outputs.tag, env.IMAGE_VERSION_PREFIX ) && !github.event.release.prerelease }}
       uses: macbre/push-to-ghcr@master
       with:
         context: ./${{ env.IMAGE_NAME }}

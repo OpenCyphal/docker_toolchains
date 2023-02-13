@@ -1,7 +1,9 @@
 #
-# Builds the c_cpp/ubuntu-20.04 toolchain container.
+# Builds the toolshed/ubuntu-20.04 toolchain container.
 #
 FROM ubuntu:20.04
+
+LABEL org.opencontainers.image.description "Provides a consistent build and test environment for authoring, continuous-integration, and publication of OpenCyphal LaTeX documents."
 
 VOLUME /repo
 
@@ -32,16 +34,19 @@ RUN apt-get -y install git
 RUN add-apt-repository -y ppa:deadsnakes/ppa
 RUN apt-get update
 
-RUN apt-get -y install python3.7
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 999
-RUN apt-get -y install python3-pip
-RUN python3 -m pip install --upgrade pip
+RUN apt-get -y install python3.11
+RUN apt-get -y install python3.11-distutils
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 999
+
+COPY get-pip.py /
+RUN python3 /get-pip.py
+RUN rm -f /get-pip.py
 
 RUN python3 -m pip install pygments
 
 # install Powershell
 RUN apt-get -y install --no-install-recommends wget apt-transport-https
-RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb && \
+RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb && \
   dpkg -i packages-microsoft-prod.deb
 RUN apt-get update && \
   apt-get install -y powershell

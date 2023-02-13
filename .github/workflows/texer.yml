@@ -1,4 +1,4 @@
-name: ghcr.io/opencyphal/c_cpp container build and publish.
+name: ghcr.io/opencyphal/texer container build and publish.
 
 on:
   release:
@@ -9,8 +9,8 @@ on:
 
 env:
   ORG_NAMESPACE: opencyphal
-  IMAGE_NAME: c_cpp
-  LATEST_TAG: ubuntu-20.04
+  IMAGE_NAME: texer
+  IMAGE_VERSION_PREFIX: tev
 
 jobs:
 
@@ -23,14 +23,13 @@ jobs:
 
     - name: dryrun-build
       if: ${{ github.event_name == 'pull_request' }}
-      run: docker build ./c_cpp
+      run: docker build ./${{ env.IMAGE_NAME }}
     - name: build-and-push
-      if: ${{ github.event_name == 'release' && contains(github.ref, '20.04-c_cpp') }}
+      if: ${{ github.event_name == 'release' && startsWith(github.ref, env.IMAGE_VERSION_PREFIX) }}
       uses: macbre/push-to-ghcr@master
       with:
         context: ./${{ env.IMAGE_NAME }}
         dockerfile: ./${{ env.IMAGE_NAME }}/Dockerfile
         image_name: ${{ env.ORG_NAMESPACE }}/${{ env.IMAGE_NAME }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        image_tag: ${{ env.LATEST_TAG }}
         repository: ghcr.io

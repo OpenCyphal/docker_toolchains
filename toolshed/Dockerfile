@@ -1,5 +1,5 @@
 #
-# Builds the c_cpp/ubuntu-20.04 toolchain container.
+# Builds the toolshed/ubuntu-20.04 toolchain container.
 #
 FROM ubuntu:20.04
 

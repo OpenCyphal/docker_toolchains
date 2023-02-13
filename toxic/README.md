@@ -1,72 +1,50 @@
-# Toxic Docker
+# toxic (txv): The OpenCyphal Toolchain Container for Python
 
-Builds and pushes a docker environment for use with tox testing. This environment contains a series of python versions allowing multi-version tox testing locally and in CI services.
+The `opencyphal/toxic` docker image provides a consistent build and test environment
+for development, continuous-integration, and test automation of Python based projects.
 
-The "sq" suffix indicates that the ["sonarqube"](https://www.sonarqube.org) scanner has been included in the image. This scanner allows tox builds to upload coverage and other reports to a sonarqube instance.
+## Official Release
 
-## Build and Push
+To release a new build of this container simply create a [new github release](https://github.com/OpenCyphal/docker_toolchains/releases/new)
+that starts with `txv`, uses the Ubuntu major and minor version, and uses an monotonically increasing "patch" version.
+For example `txv20.4.1`will cause the Github workflow to rebuild and push the `opencyphal/toxic` container with the
+tag `txv20.4.1`.
 
-These instructions are for maintainers with permissions to push to the "uavcan" organization on Docker Hub.
+***PLEASE UPDATE THE TOP-LEVEL README.md FOR EACH NEW RELEASE***
 
+## Manual Build and Push
+
+These instructions are for maintainers with permissions to push to the
+[OpenCyphal organization on Github](https://github.com/OpenCyphal/). Normally the container should be published by
+a github action but these instructions provide a way to manually update the container from any developer environment.
+
+First create a temporary (7-day expiration please) personal access token (classic) with write:packages and read:packages
+scope. See [this github help page](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+for instructions.
+
+Next, make sure you can login:
+
+```bash
+export FGP = (fine-grained permission for OpenCyphal organization)
+echo $FGP | docker login ghcr.io -u (github username) --password-stdin
 ```
-docker build .
-```
-```
-docker images
 
-REPOSITORY      TAG            IMAGE ID
-<none>          <none>         d7ab132649d6
+... now build (where x is the next version number for the container):
+
+```bash
+docker build -t ghcr.io/opencyphal/toxic:txv20.4.x .
 ```
-```
-# We use the range of python environments supported as the version tag.
-docker tag d7ab132649d6 uavcan/toxic:py35-py39-sq
-docker login --username=yourhubusername
-docker push uavcan/toxic:py35-py39-sq
+
+... and finally, push.
+
+```bash
+docker push ghcr.io/opencyphal/toxic:txv20.4.x
 ```
 
 ## Testing out the container
 
-Start an interactive session:
+To login to an interactive session do:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo uavcan/toxic:py35-py39-sq
-```
-
-On macintosh you'll probably want to optimize osxfs with something like cached or delegated:
-
-```bash
-docker run --rm -it -v ${PWD}:/repo:delegated uavcan/toxic:py35-py39-sq
-```
-
-See ["Performance tuning for volume mounts"](https://docs.docker.com/docker-for-mac/osxfs-caching/) for details.
-
-## Travis CI
-
-You can use this in your .travis.yml like this:
-
-```none
-services:
-  - docker
-
-before_install:
-- docker pull uavcan/toxic:py35-py39-sq
-
-script:
-- docker run --rm -v $TRAVIS_BUILD_DIR:/repo uavcan/uavcan/toxic:py35-py39-sq /bin/sh -c tox
-
-```
-
-## BuildKite
-
-Example pipeline.yml:
-
-```yaml
-- label: ":github: my containerized build"
-    command: "tox"
-    plugins:
-      - docker#v3.5.0:
-          workdir: /repo
-          image: "uavcan/toxic:py35-py39-sq"
-          propagate-environment: true
-          mount-ssh-agent: true
+docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toxic:txv20.4.x
 ```

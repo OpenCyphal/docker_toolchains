@@ -10,7 +10,7 @@ on:
 env:
   ORG_NAMESPACE: opencyphal
   IMAGE_NAME: toolshed
-  IMAGE_VERSION_PREFIX: txv
+  IMAGE_VERSION_PREFIX: tsv
 
 jobs:
 

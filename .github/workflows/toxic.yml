@@ -10,7 +10,7 @@ on:
 env:
   ORG_NAMESPACE: opencyphal
   IMAGE_NAME: toxic
-  IMAGE_VERSION_PREFIX: txv
+  IMAGE_VERSION_PREFIX: tx
 
 jobs:
 

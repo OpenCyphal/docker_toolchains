@@ -1,4 +1,4 @@
-# toxic (txv): The OpenCyphal Toolchain Container for Python
+# toxic (tx): The OpenCyphal Toolchain Container for Python
 
 The `opencyphal/toxic` docker image provides a consistent build and test environment
 for development, continuous-integration, and test automation of Python based projects.
@@ -6,9 +6,9 @@ for development, continuous-integration, and test automation of Python based pro
 ## Official Release
 
 To release a new build of this container simply create a [new github release](https://github.com/OpenCyphal/docker_toolchains/releases/new)
-that starts with `txv`, uses the Ubuntu major and minor version, and uses an monotonically increasing "patch" version.
+that starts with `tx`, uses the Ubuntu major and minor version, and uses an monotonically increasing "patch" version.
 For example `txv20.4.1`will cause the Github workflow to rebuild and push the `opencyphal/toxic` container with the
-tag `txv20.4.1`.
+tag `tx20.4.1` (where the release workflow elides the 'v').
 
 ***PLEASE UPDATE THE TOP-LEVEL README.md FOR EACH NEW RELEASE***
 
@@ -32,13 +32,13 @@ echo $FGP | docker login ghcr.io -u (github username) --password-stdin
 ... now build (where x is the next version number for the container):
 
 ```bash
-docker build -t ghcr.io/opencyphal/toxic:txv20.4.x .
+docker build -t ghcr.io/opencyphal/toxic:tx20.4.x .
 ```
 
 ... and finally, push.
 
 ```bash
-docker push ghcr.io/opencyphal/toxic:txv20.4.x
+docker push ghcr.io/opencyphal/toxic:tx20.4.x
 ```
 
 ## Testing out the container
@@ -46,5 +46,5 @@ docker push ghcr.io/opencyphal/toxic:txv20.4.x
 To login to an interactive session do:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toxic:txv20.4.x
+docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toxic:tx20.4.x
 ```

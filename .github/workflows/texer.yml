@@ -10,7 +10,7 @@ on:
 env:
   ORG_NAMESPACE: opencyphal
   IMAGE_NAME: texer
-  IMAGE_VERSION_PREFIX: tev
+  IMAGE_VERSION_PREFIX: te
 
 jobs:
 

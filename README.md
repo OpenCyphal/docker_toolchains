@@ -11,9 +11,10 @@ containers to get consistent build results in your local development environment
 To allow hosting of multiple container builds from a single repo each toolchain container
 is assigned a prefix. For every release event in this repo the workflow triggered is based
 on that prefix in the release tag. For example, by creating a release with the tag `tsv18.4.1-alpha`
-the release workflow for the `toolshed` container will be triggered.
+the release workflow for the `toolshed` container will be triggered (note that the 'v' in 'tsv' will be
+elided by the release action).
 
-### opencyphal/toolshed:tsv
+### opencyphal/toolshed:ts
 
 The [Open Cyphal toolshed
 container](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed)
@@ -25,7 +26,7 @@ like [libcanard](https://github.com/OpenCyphal/libcanard) and
 
 | tag      | Python | Gcc | Clang | Cmake | Other Utilities |
 |----------|--------|-----|-------|-------|-----------------|
-| [tsv20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed/70028521?tag=tsv20.4.1) | 3.10 | 9.3.0 | 10.0.0 | 3.16.3 | <ul><li>qemu</li><li>can-utils</li><li>sonar-scanner</li></ul> |
+| [ts20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 9.3.0 | 10.0.0 | 3.16.3 | <ul><li>qemu</li><li>can-utils</li><li>sonar-scanner</li></ul> |
 
 You can use this in your workflow yaml like this:
 
@@ -33,11 +34,11 @@ You can use this in your workflow yaml like this:
 jobs:
   my-job:
     runs-on: ubuntu-latest
-    container: ghcr.io/opencyphal/toolshed:tsv20.4.1
+    container: ghcr.io/opencyphal/toolshed:ts20.4.1
 ```
 
 
-### opencyphal/texer:tev
+### opencyphal/texer:te
 
 The [Open Cyphal texer
 container](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/texer)
@@ -47,7 +48,7 @@ is based on Ubuntu and provides the necessary compilers and utilities to author 
 
 | tag      | Python | Tex Live | git | Other Utilities |
 |----------|--------|----------|-----|-----------------|
-| [tev20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/texer/70028521?tag=tsv20.4.1) | 3.11 | 2019 | 2.25.1 | <ul><li>python pygments</li><li>lyx</li><li>inkscape</li></ul> |
+| [te20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/texer) | 3.11 | 2019 | 2.25.1 | <ul><li>python pygments</li><li>lyx</li><li>inkscape</li></ul> |
 
 You can use this in your workflow yaml like this:
 
@@ -55,12 +56,12 @@ You can use this in your workflow yaml like this:
 jobs:
   my-job:
     runs-on: ubuntu-latest
-    container: ghcr.io/opencyphal/texer:tev20.4.1
+    container: ghcr.io/opencyphal/texer:te20.4.1
 ```
 
 
 
- ### opencyphal/toxic:txv
+ ### opencyphal/toxic:tx
 
 
 The [Open Cyphal toxic
@@ -71,7 +72,7 @@ is based on Ubuntu and provides all modern Python3 distributions, pip, tox, and 
 
 | tag      | Base Python | Python Versions | Tox | Nox | pip | Other Utilities |
 |----------|-------------|-----------------|-----|-----|-----|-----------------|
-| [txv20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic/70031935?tag=txv20.4.1) | 3.8 | 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | (not available) | 20.0.2 | <ul><li>sonar-scanner</li></ul> |
+| [tx20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | (not available) | 20.0.2 | <ul><li>sonar-scanner</li></ul> |
 
 You can use this in your workflow yaml like this:
 
@@ -79,5 +80,5 @@ You can use this in your workflow yaml like this:
 jobs:
   my-job:
     runs-on: ubuntu-latest
-    container: ghcr.io/opencyphal/toxic:txv20.4.1
+    container: ghcr.io/opencyphal/toxic:tx20.4.1
 ```

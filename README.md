@@ -10,9 +10,8 @@ containers to get consistent build results in your local development environment
 
 To allow hosting of multiple container builds from a single repo each toolchain container
 is assigned a prefix. For every release event in this repo the workflow triggered is based
-on that prefix in the release tag. For example, by creating a release with the tag `tsv18.4.1-alpha`
-the release workflow for the `toolshed` container will be triggered (note that the 'v' in 'tsv' will be
-elided by the release action).
+on that prefix in the release tag. For example, by creating a release with the tag `ts18.4.1-alpha`
+the release workflow for the `toolshed` container will be triggered.
 
 ### opencyphal/toolshed:ts
 
@@ -82,3 +81,9 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/opencyphal/toxic:tx20.4.1
 ```
+
+---------------------------
+
+Note that, if you create a new container in this project, the prefix cannot end with 'v'. So "tu22.4.1" is okay but
+"tv28.3.1" won't work because the release workflows elide "v" (as in version) by default and the container will become
+"t28.3.1" in packages but "tv.28.3.1" as a git tag.

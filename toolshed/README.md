@@ -7,8 +7,8 @@ for development, continuous-integration, and test automation of C and C++ based 
 
 To release a new build of this container simply create a [new github release](https://github.com/OpenCyphal/docker_toolchains/releases/new)
 that starts with `ts`, uses the Ubuntu major and minor version, and uses an monotonically increasing "patch" version.
-For example `tsv20.4.1`will cause the Github workflow to rebuild and push the `opencyphal/toolshed` container with the
-tag `ts20.4.1` (where the release workflow elides the 'v').
+For example `ts20.4.1`will cause the Github workflow to rebuild and push the `opencyphal/toolshed` container with the
+tag `ts20.4.1`.
 
 ***PLEASE UPDATE THE TOP-LEVEL README.md FOR EACH NEW RELEASE***
 

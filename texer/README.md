@@ -7,8 +7,8 @@ and publication of OpenCyphal [LaTeX](https://www.latex-project.org/) documents.
 
 To release a new build of this container simply create a [new github release](https://github.com/OpenCyphal/docker_toolchains/releases/new)
 that starts with `te`, uses the Ubuntu major and minor version, and uses an monotonically increasing "patch" version.
-For example `tev20.4.1`will cause the Github workflow to rebuild and push the `opencyphal/texer` container with the
-tag `te20.4.1` (where the release workflow elides the 'v').
+For example `te20.4.1`will cause the Github workflow to rebuild and push the `opencyphal/texer` container with the
+tag `te20.4.1`.
 
 ***PLEASE UPDATE THE TOP-LEVEL README.md FOR EACH NEW RELEASE***
 

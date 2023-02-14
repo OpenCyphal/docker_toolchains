@@ -7,8 +7,8 @@ for development, continuous-integration, and test automation of Python based pro
 
 To release a new build of this container simply create a [new github release](https://github.com/OpenCyphal/docker_toolchains/releases/new)
 that starts with `tx`, uses the Ubuntu major and minor version, and uses an monotonically increasing "patch" version.
-For example `txv20.4.1`will cause the Github workflow to rebuild and push the `opencyphal/toxic` container with the
-tag `tx20.4.1` (where the release workflow elides the 'v').
+For example `tx20.4.1`will cause the Github workflow to rebuild and push the `opencyphal/toxic` container with the
+tag `tx20.4.1`.
 
 ***PLEASE UPDATE THE TOP-LEVEL README.md FOR EACH NEW RELEASE***
 

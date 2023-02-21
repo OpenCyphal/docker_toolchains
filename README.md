@@ -48,6 +48,7 @@ is based on Ubuntu and provides the necessary compilers and utilities to author 
 | tag      | Python | Tex Live | git | Other Utilities |
 |----------|--------|----------|-----|-----------------|
 | [te20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/texer) | 3.11 | 2019 | 2.25.1 | <ul><li>python pygments</li><li>lyx</li><li>inkscape</li></ul> |
+| [te22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/texer) | 3.11 | 2021 | 2.25.1 | <ul><li>python pygments</li><li>lyx</li><li>inkscape</li></ul> |
 
 You can use this in your workflow yaml like this:
 

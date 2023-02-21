@@ -1,14 +1,13 @@
 #
-# Builds the toolshed/ubuntu-20.04 toolchain container.
+# Builds the toolshed/ubuntu-22.04 toolchain container.
 #
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL org.opencontainers.image.description "Provides a consistent build and test environment for authoring, continuous-integration, and publication of OpenCyphal LaTeX documents."
 
 VOLUME /repo
 
 WORKDIR /repo
-
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -46,7 +45,7 @@ RUN python3 -m pip install pygments
 
 # install Powershell
 RUN apt-get -y install --no-install-recommends wget apt-transport-https
-RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb && \
+RUN wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb && \
   dpkg -i packages-microsoft-prod.deb
 RUN apt-get update && \
   apt-get install -y powershell

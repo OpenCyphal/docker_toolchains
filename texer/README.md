@@ -1,4 +1,4 @@
-# texer (te): The OpenCyphal Toolchain Container for Python
+# texer (te): The OpenCyphal Toolchain Container for LaTeX
 
 The `opencyphal/texer` container provides a consistent build and test environment for authoring, continuous-integration,
 and publication of OpenCyphal [LaTeX](https://www.latex-project.org/) documents.

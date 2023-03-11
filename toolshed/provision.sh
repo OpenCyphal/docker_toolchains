@@ -39,12 +39,15 @@ apt-get -y install python3.10
 apt-get -y install python3-pip
 apt-get -y install cmake
 apt-get -y install git
+apt-get -y install llvm
 apt-get -y install clang
+apt-get -y install libclang-dev
 apt-get -y install clang-format
-apt-get -y install doxygen
+apt-get -y install clang-tidy
+apt-get -y install flex
+apt-get -y install bison
 apt-get -y install lcov
 apt-get -y install valgrind
-apt-get -y install clang-tidy
 apt-get -y install npm
 apt-get -y install graphviz
 apt-get -y install curl
@@ -55,7 +58,9 @@ apt-get -y install g++-multilib
 apt-get -y install qemu
 apt-get -y install ninja-build
 apt-get -y install can-utils
+apt-get -y install vim
 
 echo "export LANG=en_US.UTF-8" >> ~/.bashrc
 echo "export LANGUAGE=en_US:en" >> ~/.bashrc
 echo "export LC_ALL=en_US.UTF-8" >> ~/.bashrc
+echo "alias la=\"ls -lah\"" >> ~/.bashrc

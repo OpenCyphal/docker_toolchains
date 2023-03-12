@@ -20,6 +20,15 @@ COPY provision.sh /
 RUN /provision.sh
 
 # +---------------------------------------------------------------------------+
+# | LLVM
+# +---------------------------------------------------------------------------+
+WORKDIR /tmp
+ADD llvm-install.sh ./llvm-install.sh
+ADD llvm-select.sh ./llvm-select.sh
+RUN ./llvm-install.sh 15 all
+RUN ./llvm-select.sh 15
+
+# +---------------------------------------------------------------------------+
 # | DOXYGEN BUILD
 # +---------------------------------------------------------------------------+
 ARG DOXYGEN_VERSION=1_9_6

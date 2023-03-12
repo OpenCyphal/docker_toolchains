@@ -39,11 +39,6 @@ apt-get -y install python3.10
 apt-get -y install python3-pip
 apt-get -y install cmake
 apt-get -y install git
-apt-get -y install llvm
-apt-get -y install clang
-apt-get -y install libclang-dev
-apt-get -y install clang-format
-apt-get -y install clang-tidy
 apt-get -y install flex
 apt-get -y install bison
 apt-get -y install lcov
@@ -58,6 +53,9 @@ apt-get -y install g++-multilib
 apt-get -y install qemu
 apt-get -y install ninja-build
 apt-get -y install can-utils
+apt-get -y install lsb-release
+apt-get -y install wget
+apt-get -y install gnupg
 apt-get -y install vim
 
 echo "export LANG=en_US.UTF-8" >> ~/.bashrc

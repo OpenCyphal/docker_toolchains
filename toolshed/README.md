@@ -32,13 +32,13 @@ echo $FGP | docker login ghcr.io -u (github username) --password-stdin
 ... now build (where x is the next version number for the container):
 
 ```bash
-docker build -t ghcr.io/opencyphal/toolshed:ts20.4.x .
+docker build -t ghcr.io/opencyphal/toolshed:ts22.4.x .
 ```
 
 ... and finally, push.
 
 ```bash
-docker push ghcr.io/opencyphal/toolshed:ts20.4.x
+docker push ghcr.io/opencyphal/toolshed:ts22.4.x
 ```
 
 ## Testing out the container
@@ -46,7 +46,7 @@ docker push ghcr.io/opencyphal/toolshed:ts20.4.x
 To login to an interactive session do:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toolshed:ts20.4.x
+docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toolshed:ts22.4.x
 ```
 
 ## Toolchain Documentation

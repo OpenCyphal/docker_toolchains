@@ -26,6 +26,7 @@ like [libcanard](https://github.com/OpenCyphal/libcanard) and
 | tag      | Python | Gcc | Clang | Cmake | Other Utilities |
 |----------|--------|-----|-------|-------|-----------------|
 | [ts20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 9.3.0 | 10.0.0 | 3.16.3 | <ul><li>qemu</li><li>can-utils</li><li>sonar-scanner</li></ul> |
+| [ts22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>qemu</li><li>can-utils</li><li>sonar-scanner</li><li>doxygen 1.9.6</li></ul>
 
 You can use this in your workflow yaml like this:
 
@@ -33,7 +34,7 @@ You can use this in your workflow yaml like this:
 jobs:
   my-job:
     runs-on: ubuntu-latest
-    container: ghcr.io/opencyphal/toolshed:ts20.4.1
+    container: ghcr.io/opencyphal/toolshed:ts22.4.1
 ```
 
 

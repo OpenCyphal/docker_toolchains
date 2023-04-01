@@ -48,27 +48,3 @@ To login to an interactive session do:
 ```bash
 docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toolshed:ts22.4.x
 ```
-
-## Toolchain Documentation
-
-### Sonarqube
-
-Wrap yer build:
-
-```bash
-build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build/
-```
-
-Upload the results:
-
-```bash
-sonar-scanner \
-  -Dsonar.organization=OpenCyphal \
-  -Dsonar.projectKey=OpenCyphal_myproject \
-  -Dsonar.sources=. \
-  -Dsonar.host.url=https://sonarcloud.io \
-  -Dsonar.cfamily.build-wrapper-output=bw-output \
-  -Dsonar.login=TOKEN
-```
-
-A [CMake example on github](https://github.com/SonarSource/sonarcloud_example_cpp-cmake-linux-otherci)

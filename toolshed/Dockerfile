@@ -20,6 +20,15 @@ COPY provision.sh /
 RUN /provision.sh
 
 # +---------------------------------------------------------------------------+
+# | NVM/nodejs
+# +---------------------------------------------------------------------------+
+WORKDIR /tmp
+ADD nvm-install.sh ./nvm-install.sh
+RUN . ./nvm-install.sh
+ENV NVM_DIR="~/.nvm"
+RUN . ~/.nvm/nvm.sh && nvm install v16.20.0
+
+# +---------------------------------------------------------------------------+
 # | LLVM
 # +---------------------------------------------------------------------------+
 WORKDIR /tmp
@@ -92,28 +101,18 @@ ENV PATH="/usr/share/${GCC_ARM_NONE_LINUX_BASENAME}/bin:${PATH}"
 
 RUN ${GCC_ARM_NONE_LINUX_TRIPLE}-gcc --version
 
-
-# +---------------------------------------------------------------------------+
-# | INSTALL SONAR SCANNER
-# +---------------------------------------------------------------------------+
-ENV SONAR_SCANNER_VERSION 4.7.0.2747
-ENV SONAR_SCANNER_HOME=/sonar-scanner-${SONAR_SCANNER_VERSION}-linux
-ENV SONAR_SCANNER_OPTS="-server"
-
-ENV PATH="${SONAR_SCANNER_HOME}/build-wrapper-linux-x86:${PATH}"
-ENV PATH="${SONAR_SCANNER_HOME}/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin:${PATH}"
-
-COPY sonar_qube.sh /
-RUN /sonar_qube.sh
-
 # +---------------------------------------------------------------------------+
 # | INSTALL THE PATH FOR INTERATIVE SESSIONS
 # +---------------------------------------------------------------------------+
 RUN echo "export PATH=$PATH" >> ~/.bashrc
 
 # +---------------------------------------------------------------------------+
-# | INSTALL PYTHON AND NPM STUFF
+# | INSTALL PYTHON STUFF
 # +---------------------------------------------------------------------------+
 RUN pip3 install virtualenv
 RUN pip3 install tox
-RUN cd /tmp && npm install -g gh-pages
+
+# +---------------------------------------------------------------------------+
+# | LEAVE THE WORKDIR AS /repo
+# +---------------------------------------------------------------------------+
+WORKDIR /repo

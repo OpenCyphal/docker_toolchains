@@ -43,7 +43,6 @@ apt-get -y install flex
 apt-get -y install bison
 apt-get -y install lcov
 apt-get -y install valgrind
-apt-get -y install npm
 apt-get -y install graphviz
 apt-get -y install curl
 apt-get -y install unzip

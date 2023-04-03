@@ -111,6 +111,9 @@ RUN echo "export PATH=$PATH" >> ~/.bashrc
 # +---------------------------------------------------------------------------+
 RUN pip3 install virtualenv
 RUN pip3 install tox
+RUN pip3 install nox
+RUN pip3 install gcovr
+RUN pip3 list
 
 # +---------------------------------------------------------------------------+
 # | LEAVE THE WORKDIR AS /repo

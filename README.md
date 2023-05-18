@@ -77,6 +77,7 @@ is based on Ubuntu and provides all modern Python3 distributions, pip, tox, and 
 | tag      | Base Python | Python Versions | Tox | Nox | pip | Other Utilities |
 |----------|-------------|-----------------|-----|-----|-----|-----------------|
 | [tx20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | (not available) | 20.0.2 | <ul><li>sonar-scanner</li></ul> |
+| [tx22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | (not available) | 20.0.2 | |
 
 You can use this in your workflow yaml like this:
 

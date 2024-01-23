@@ -1,7 +1,7 @@
 #
 # Builds the toolshed/ubuntu-22.04 toolchain container.
 #
-FROM ubuntu:22.04
+FROM ubuntu:22.04 AS base
 
 LABEL org.opencontainers.image.description "Provides a consistent build and test environment for development, continuous-integration, and test automation of OpenCyphal C and C++ based projects."
 
@@ -19,53 +19,60 @@ ENV LC_ALL=en_US.UTF-8
 COPY provision.sh /
 RUN /provision.sh
 
+
 # +---------------------------------------------------------------------------+
 # | NVM/nodejs
 # +---------------------------------------------------------------------------+
+FROM base AS node
+
 WORKDIR /tmp
 ADD nvm-install.sh ./nvm-install.sh
 RUN . ./nvm-install.sh
 ENV NVM_DIR="~/.nvm"
 RUN . ~/.nvm/nvm.sh && nvm install v16.20.0
 
+
+# +---------------------------------------------------------------------------+
+# | INSTALL PYTHON STUFF
+# +---------------------------------------------------------------------------+
+FROM node AS python
+WORKDIR /tmp
+
+RUN pip3 install virtualenv
+RUN pip3 install tox
+RUN pip3 install nox
+RUN pip3 install gcovr
+RUN pip3 list
+
+
 # +---------------------------------------------------------------------------+
 # | LLVM
 # +---------------------------------------------------------------------------+
+FROM python AS llvm
 WORKDIR /tmp
+
 ADD llvm-install.sh ./llvm-install.sh
 ADD llvm-select.sh ./llvm-select.sh
-RUN ./llvm-install.sh 15 all
-RUN ./llvm-select.sh 15
+RUN ./llvm-install.sh 18 all
+RUN ./llvm-select.sh 18
+
 
 # +---------------------------------------------------------------------------+
-# | DOXYGEN BUILD
+# | GCC
 # +---------------------------------------------------------------------------+
-ARG DOXYGEN_VERSION=1_9_6
+FROM llvm AS gcc-arm64
 
+ARG GCC_HOST_PLATFORM=aarch64
+
+FROM llvm AS gcc-amd64
+
+ARG GCC_HOST_PLATFORM=x86_64
+
+FROM gcc-$TARGETARCH AS gcc
 WORKDIR /tmp
-COPY doxygen-Release_${DOXYGEN_VERSION}.sha512.txt .
-ADD https://github.com/doxygen/doxygen/archive/refs/tags/Release_${DOXYGEN_VERSION}.tar.gz doxygen-Release_${DOXYGEN_VERSION}.tar.gz
-RUN sha512sum -c doxygen-Release_${DOXYGEN_VERSION}.sha512.txt
-RUN mkdir doxygen-Release
-RUN tar -xvf doxygen-Release_${DOXYGEN_VERSION}.tar.gz -C doxygen-Release --strip-components 1
-RUN rm doxygen-Release_${DOXYGEN_VERSION}.tar.gz
-RUN mkdir doxygen-Release/build
-
-WORKDIR /tmp/doxygen-Release/build
-RUN cmake -G "Unix Makefiles"  -Dbuild_parse:BOOL=ON -Duse_libclang:BOOL=ON ..
-RUN make
-RUN make install
-
-WORKDIR /tmp
-RUN rm -rf doxygen-Release
-
-
-# +---------------------------------------------------------------------------+
-# | INSTALL TOOLCHAINS
-# +---------------------------------------------------------------------------+
 
 # ARM: M-Cores, Bare Metal
-ARG GCC_ARM_NONE_EABI_PLATFORM=x86_64
+ARG GCC_ARM_NONE_EABI_PLATFORM=${GCC_HOST_PLATFORM}
 ARG GCC_ARM_NONE_EABI_VERSION=11.2-2022.02
 ARG GCC_ARM_NONE_EABI_TRIPLE=arm-none-eabi
 ARG GCC_ARM_NONE_EABI_BASENAME=gcc-arm-${GCC_ARM_NONE_EABI_VERSION}-${GCC_ARM_NONE_EABI_PLATFORM}-${GCC_ARM_NONE_EABI_TRIPLE}
@@ -84,7 +91,7 @@ ENV PATH="/usr/share/${GCC_ARM_NONE_EABI_BASENAME}/bin:${PATH}"
 RUN ${GCC_ARM_NONE_EABI_TRIPLE}-gcc --version
 
 # ARM: A-Cores, Linux
-ARG GCC_ARM_NONE_LINUX_PLATFORM=x86_64
+ARG GCC_ARM_NONE_LINUX_PLATFORM=${GCC_HOST_PLATFORM}
 ARG GCC_ARM_NONE_LINUX_VERSION=11.2-2022.02
 ARG GCC_ARM_NONE_LINUX_TRIPLE=arm-none-linux-gnueabihf
 ARG GCC_ARM_NONE_LINUX_BASENAME=gcc-arm-${GCC_ARM_NONE_LINUX_VERSION}-${GCC_ARM_NONE_LINUX_PLATFORM}-${GCC_ARM_NONE_LINUX_TRIPLE}
@@ -101,21 +108,47 @@ ENV PATH="/usr/share/${GCC_ARM_NONE_LINUX_BASENAME}/bin:${PATH}"
 
 RUN ${GCC_ARM_NONE_LINUX_TRIPLE}-gcc --version
 
+
 # +---------------------------------------------------------------------------+
-# | INSTALL THE PATH FOR INTERATIVE SESSIONS
+# | DOXYGEN BUILD
 # +---------------------------------------------------------------------------+
+FROM gcc AS doxygen-arm64
+
+ARG USE_LIB_CLANG=OFF
+
+FROM gcc AS doxygen-amd64
+
+ARG USE_LIB_CLANG=OFF
+
+FROM doxygen-$TARGETARCH AS doxygen
+WORKDIR /tmp
+
+ARG DOXYGEN_VERSION=1_9_6
+
+COPY doxygen-Release_${DOXYGEN_VERSION}.sha512.txt .
+ADD https://github.com/doxygen/doxygen/archive/refs/tags/Release_${DOXYGEN_VERSION}.tar.gz doxygen-Release_${DOXYGEN_VERSION}.tar.gz
+RUN sha512sum -c doxygen-Release_${DOXYGEN_VERSION}.sha512.txt
+RUN mkdir doxygen-Release
+RUN tar -xvf doxygen-Release_${DOXYGEN_VERSION}.tar.gz -C doxygen-Release --strip-components 1
+RUN rm doxygen-Release_${DOXYGEN_VERSION}.tar.gz
+RUN mkdir doxygen-Release/build
+
+WORKDIR /tmp/doxygen-Release/build
+RUN cmake -G "Unix Makefiles"  -Dbuild_parse:BOOL=ON -Duse_libclang:BOOL=${USE_LIB_CLANG} ..
+RUN make
+RUN make install
+
+WORKDIR /tmp
+RUN rm -rf doxygen-Release
+
+
+# +---------------------------------------------------------------------------+
+# | FINALIZE
+# +---------------------------------------------------------------------------+
+FROM doxygen AS all
+
+# INSTALL THE PATH FOR INTERATIVE SESSIONS
 RUN echo "export PATH=$PATH" >> ~/.bashrc
 
-# +---------------------------------------------------------------------------+
-# | INSTALL PYTHON STUFF
-# +---------------------------------------------------------------------------+
-RUN pip3 install virtualenv
-RUN pip3 install tox
-RUN pip3 install nox
-RUN pip3 install gcovr
-RUN pip3 list
-
-# +---------------------------------------------------------------------------+
-# | LEAVE THE WORKDIR AS /repo
-# +---------------------------------------------------------------------------+
+# LEAVE THE WORKDIR AS /repo
 WORKDIR /repo

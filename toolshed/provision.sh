@@ -22,6 +22,8 @@ set -o pipefail
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
+apt-get -y install unzip
+apt-get -y install zip
 
 # setup locales in the container so Python can default to utf-8.
 apt-get -y install locales
@@ -45,10 +47,6 @@ apt-get -y install lcov
 apt-get -y install valgrind
 apt-get -y install graphviz
 apt-get -y install curl
-apt-get -y install unzip
-apt-get -y install zip
-apt-get -y install gcc-multilib
-apt-get -y install g++-multilib
 apt-get -y install qemu
 apt-get -y install ninja-build
 apt-get -y install can-utils

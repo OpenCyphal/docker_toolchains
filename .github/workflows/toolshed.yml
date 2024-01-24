@@ -56,5 +56,9 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: form image tag
+      id: image_tag
+      uses: olegtarasov/get-tag@v2.1.2
+
     - name: build-and-push
-      run: cd ${{ env.IMAGE_NAME }} && docker buildx build --platform linux/arm64,linux/amd64 --push -t ghcr.io/${{ env.ORG_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION_PREFIX }}${{ github.ref }} .
+      run: cd ${{ env.IMAGE_NAME }} && docker buildx build --platform linux/arm64,linux/amd64 --push -t ghcr.io/${{ env.ORG_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ steps.image_tag.outputs.tag }} .

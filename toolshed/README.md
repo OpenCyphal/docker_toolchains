@@ -29,22 +29,69 @@ export FGP = (fine-grained permission for OpenCyphal organization)
 echo $FGP | docker login ghcr.io -u (github username) --password-stdin
 ```
 
-... now build (where x is the next version number for the container):
+... build a multi-platform image following the instructions [here](https://docs.docker.com/build/building/multi-platform/#multiple-native-nodes):
 
 ```bash
-docker build -t ghcr.io/opencyphal/toolshed:ts22.4.x .
+docker buildx create --use --name cyphalbuild
 ```
 
-... and finally, push.
+If you already created the `cyphalbuild` builder then just use it instead of creating it:
 
 ```bash
-docker push ghcr.io/opencyphal/toolshed:ts22.4.x
+docker buildx use cyphalbuild
 ```
 
-## Testing out the container
+... then build the container:
 
-To login to an interactive session do:
+```bash
+docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/opencyphal/toolshed:ts22.4.x .
+```
+
+(where x is the next version number for the container)
+
+When the build completes you'll see the following warning:
+
+> WARNING: No output specified with docker-container driver. Build result will only remain in the build cache. To push result image into registry use --push or to load image into docker use --load
+
+It's important you don't restart your docker build container before you load and/or push since it may blow away the cache you need to push or load from.
+
+### Load
+Currently you can't use --load with docker desktop so the only way to test the container is to rebuild for one platform only:
+
+```bash
+docker buildx build --platform linux/arm64 --load -t ghcr.io/opencyphal/toolshed:ts22.4.x .
+```
+
+This will be operating off of the cache so it shouldn't take very long to complete. After it does you'll see your image using the classic `docker images` command. Now you can login to the container to test it out:
 
 ```bash
 docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toolshed:ts22.4.x
+```
+
+### Push
+
+As with load, you need to re-build with a `--push` argument but you'll be using the cache so the build should be a no-op:
+
+```bash
+docker buildx build --platform linux/amd64,linux/arm64 --push -t ghcr.io/opencyphal/toolshed:ts22.4.x .
+```
+
+## More on Multi-Platform Builders
+
+The two commands above make some assumptions about defaults and capabilities that we haven't verified on all build hosts. First, the `buildx create` command is assumed to target the correct Docker context. You can see your contexts by doing:
+
+```
+docker context ls
+```
+
+... then target a specific context by adding it as an additional argument to the builder create command:
+
+```
+docker buildx create --use --name cyphalbuild desktop-linux
+```
+
+We also assume you are using a build that has our two supported host platforms `linux/amd64` and `linux/arm64`. You can verify this after creating the builder using the inspect command. This should also verify that your builder is now in effect:
+
+```
+docker buildx inspect --bootstrap
 ```

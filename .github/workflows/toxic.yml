@@ -3,7 +3,7 @@ name: ghcr.io/opencyphal/toxic container build and publish.
 on:
   release:
     types: [ published ]
-    
+
   pull_request:
     branches: [ "main" ]
 

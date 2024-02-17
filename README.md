@@ -79,7 +79,8 @@ is based on Ubuntu and provides all modern Python3 distributions, pip, tox, and 
 | tag      | Base Python | Python Versions | Tox | Nox | pip | Platforms | Other Utilities |
 |----------|-------------|-----------------|-----|-----|-----|-----------|-----------------|
 | [tx20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | (not available) | 20.0.2 | <ul><li>linux/amd64</li></ul> | <ul><li>sonar-scanner</li></ul> |
-| [tx22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | (not available) | 20.0.2 | <ul><li>linux/amd64</li></ul> | |
+| [tx22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | 2023.4.22 | 20.0.2 | <ul><li>linux/amd64</li></ul> | |
+| [tx22.4.2](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.10 | 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.13.0 | 2023.4.22 | 20.0.2 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | |
 
 You can use this in your workflow yaml like this:
 

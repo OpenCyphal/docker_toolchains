@@ -19,10 +19,12 @@ set -o errexit
 set -o pipefail
 
 # +----------------------------------------------------------+
+export DEBIAN_FRONTEND=noninteractive
 
 apt-get -y install software-properties-common
 apt-get -y install git
 apt-get -y install curl
+apt-get -y install wget
 apt-get -y install unzip
 
 # deadsnakes maintains a bunch of python versions for Ubuntu.

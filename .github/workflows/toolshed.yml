@@ -89,9 +89,8 @@ jobs:
         name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
-        tags:
-          - type=ref,event=tag
         with:
+          tags: type=ref,event=tag
           images: ${{ env.REGISTRY_IMAGE }}
 
       - name: Login to GHCR

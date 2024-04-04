@@ -21,22 +21,15 @@ set -o pipefail
 # +----------------------------------------------------------+
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get -y install apt-utils
-apt-get -y install python3.10
-apt-get -y install python3-pip
-apt-get -y install cmake
-apt-get -y install git
-apt-get -y install flex
-apt-get -y install bison
-apt-get -y install lcov
-apt-get -y install valgrind
-apt-get -y install graphviz
-apt-get -y install curl
-apt-get -y install qemu
-apt-get -y install ninja-build
-apt-get -y install can-utils
-apt-get -y install lsb-release
-apt-get -y install wget
-apt-get -y install gnupg
-apt-get -y install vim
-apt-get -y install g++-12
+apt-get update
+
+# setup locales in the container so Python can default to utf-8.
+apt-get -y install locales
+# from http://jaredmarkell.com/docker-and-locales/
+locale-gen en_US.UTF-8
+# See Dockerfile for exports
+
+apt-get -y install software-properties-common
+add-apt-repository -y ppa:deadsnakes/ppa
+apt-get update
+

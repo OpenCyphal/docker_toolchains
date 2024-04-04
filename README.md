@@ -25,12 +25,13 @@ like [libcanard](https://github.com/OpenCyphal/libcanard) and
 
 | tag      | Python | Gcc | Clang | Cmake | Platforms | Other Utilities |
 |----------|--------|-----|-------|-------|-----------|-----------------|
-| [ts20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 9.3.0 | 10.0.0 | 3.16.3 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>sonar-scanner</li></ul> |
-| [ts22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>sonar-scanner</li><li>doxygen 1.9.6</li></ul>
-| [ts22.4.2](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>~~sonar-scanner~~</li><li>doxygen 1.9.6</li><li>nvm</li><li>node 16.20.0</li></ul>
-| [ts22.4.3](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.9.6</li><li>nvm</li><li>node 16.20.0</li><li>nox</li><li>govr</li></ul>
-| ts22.4.4 - An experimental release that shouldn't be used. |
+| [ts22.4.7](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 12.3.0 | 18.1.3 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>govr</li></ul>
+| [ts22.4.6](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.4.0 | 18.0.0 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>govr</li></ul>
 | [ts22.4.5](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.4.0 | 18.0.0 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.9.6</li><li>nvm</li><li>node 16.20.0</li><li>nox</li><li>govr</li></ul>
+| [ts22.4.3](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.9.6</li><li>nvm</li><li>node 16.20.0</li><li>nox</li><li>govr</li></ul>
+| [ts22.4.2](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>~~sonar-scanner~~</li><li>doxygen 1.9.6</li><li>nvm</li><li>node 16.20.0</li></ul>
+| [ts22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>sonar-scanner</li><li>doxygen 1.9.6</li></ul>
+
 
 
 You can use this in your workflow yaml like this:
@@ -39,7 +40,7 @@ You can use this in your workflow yaml like this:
 jobs:
   my-job:
     runs-on: ubuntu-latest
-    container: ghcr.io/opencyphal/toolshed:ts22.4.3
+    container: ghcr.io/opencyphal/toolshed:ts22.4.7
 ```
 
 
@@ -53,8 +54,8 @@ is based on Ubuntu and provides the necessary compilers and utilities to author 
 
 | tag      | Python | Tex Live | git | Platforms | Other Utilities |
 |----------|--------|----------|-----|-----------|-----------------|
-| [te20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/texer) | 3.11 | 2019 | 2.25.1 | <ul><li>linux/amd64</li></ul> | <ul><li>python pygments</li><li>lyx</li><li>inkscape</li></ul> |
 | [te22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/texer) | 3.11 | 2022 | 2.34.1 | <ul><li>linux/amd64</li></ul> | <ul><li>python pygments</li><li>lyx</li><li>inkscape</li></ul> |
+| [te20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/texer) | 3.11 | 2019 | 2.25.1 | <ul><li>linux/amd64</li></ul> | <ul><li>python pygments</li><li>lyx</li><li>inkscape</li></ul> |
 
 You can use this in your workflow yaml like this:
 
@@ -78,9 +79,10 @@ is based on Ubuntu and provides all modern Python3 distributions, pip, tox, and 
 
 | tag      | Base Python | Python Versions | Tox | Nox | pip | Platforms | Other Utilities |
 |----------|-------------|-----------------|-----|-----|-----|-----------|-----------------|
-| [tx20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | (not available) | 20.0.2 | <ul><li>linux/amd64</li></ul> | <ul><li>sonar-scanner</li></ul> |
-| [tx22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | 2023.4.22 | 20.0.2 | <ul><li>linux/amd64</li></ul> | |
 | [tx22.4.2](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.10 | 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.13.0 | 2023.4.22 | 20.0.2 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | |
+| [tx22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | 2023.4.22 | 20.0.2 | <ul><li>linux/amd64</li></ul> | |
+| [tx20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | (not available) | 20.0.2 | <ul><li>linux/amd64</li></ul> | <ul><li>sonar-scanner</li></ul> |
+
 
 You can use this in your workflow yaml like this:
 
@@ -88,7 +90,7 @@ You can use this in your workflow yaml like this:
 jobs:
   my-job:
     runs-on: ubuntu-latest
-    container: ghcr.io/opencyphal/toxic:tx20.4.1
+    container: ghcr.io/opencyphal/toxic:tx20.4.2
 ```
 
 ---------------------------

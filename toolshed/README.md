@@ -18,6 +18,13 @@ These instructions are for maintainers with permissions to push to the
 [OpenCyphal organization on Github](https://github.com/OpenCyphal/). Normally the container should be published by
 a github action but these instructions provide a way to manually update the container from any developer environment.
 
+> **IMPORTANT NOTE**
+>
+> You must enable [containerd](https://containerd.io/) if you are using Docker Desktop to build locally (this is available as a general setting in Docker desktop). Docker desktop does not support multi-platform images and, if you try to use Docker Desktop without containerd, these instructions will fail with the message:
+>
+> *WARNING: No output specified with docker-container driver. Build result will only remain in the build cache.*
+>
+
 First create a temporary (7-day expiration please) personal access token (classic) with write:packages and read:packages
 scope. See [this github help page](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 for instructions.
@@ -44,25 +51,16 @@ docker buildx use cyphalbuild
 ... then build the container:
 
 ```bash
-docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/opencyphal/toolshed:ts22.4.x .
+docker buildx build --platform linux/amd64,linux/arm64 --load -t ghcr.io/opencyphal/toolshed:ts22.4.x .
 ```
 
-(where x is the next version number for the container)
+After this completes you'll see your image using the classic `docker images` command or the newer `buildx imagetools` command to inspect the multi-architecture manifest:
 
-When the build completes you'll see the following warning:
-
-> WARNING: No output specified with docker-container driver. Build result will only remain in the build cache. To push result image into registry use --push or to load image into docker use --load
-
-It's important you don't restart your docker build container before you load and/or push since it may blow away the cache you need to push or load from.
-
-### Load
-Currently you can't use --load with docker desktop so the only way to test the container is to rebuild for one platform only:
-
-```bash
-docker buildx build --platform linux/arm64 --load -t ghcr.io/opencyphal/toolshed:ts22.4.x .
+```
+docker buildx imagetools inspect ghcr.io/opencyphal/toolshed:ts22.4.x
 ```
 
-This will be operating off of the cache so it shouldn't take very long to complete. After it does you'll see your image using the classic `docker images` command. Now you can login to the container to test it out:
+ Now you can login to the container to test it out:
 
 ```bash
 docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toolshed:ts22.4.x

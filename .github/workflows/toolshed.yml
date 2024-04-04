@@ -13,7 +13,7 @@ env:
 
 jobs:
   release-ts:
-    if: ${{ github.event_name == 'pull_request' || ( github.event_name == 'release' && startsWith( github.ref, 'refs/tags/ts') && github.event.release.prerelease ) }}
+    if: ${{ github.event_name == 'pull_request' || ( github.event_name == 'release' && startsWith( github.ref, 'refs/tags/ts') ) }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -50,17 +50,17 @@ jobs:
         context: toolshed
         platforms: ${{ matrix.platform }}
         labels: ${{ steps.meta.outputs.labels }}
-        outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=${{ github.event_name == 'pull_request' && 'false' || 'true' }}
+        outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=${{ (github.event_name == 'pull_request' &&  !github.event.release.prerelease) && 'false' || 'true' }}
     -
       name: Export digest
-      if: ${{ github.event_name != 'pull_request'}}
+      if: ${{ github.event_name != 'pull_request'}} || 
       run: |
         mkdir -p /tmp/digests
         digest="${{ steps.build.outputs.digest }}"
         touch "/tmp/digests/${digest#sha256:}"
     -
       name: Upload digest
-      if: ${{ github.event_name != 'pull_request'}}
+      if: ${{ github.event_name != 'pull_request' && !github.event.release.prerelease }}
       uses: actions/upload-artifact@v4
       with:
         name: digests-${{ env.PLATFORM_PAIR }}

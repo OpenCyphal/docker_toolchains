@@ -13,7 +13,7 @@ env:
 
 jobs:
   release-ts:
-    if: ${{ github.event_name == 'pull_request' || ( github.event_name == 'release' && startsWith( github.ref, 'refs/tags/ts') && github.event.release.prerelease ) }}
+    if: ${{ github.event_name == 'pull_request' || ( github.event_name == 'release' && startsWith( github.ref, 'refs/tags/ts') ) }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -50,17 +50,17 @@ jobs:
         context: toolshed
         platforms: ${{ matrix.platform }}
         labels: ${{ steps.meta.outputs.labels }}
-        outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=${{ github.event_name == 'pull_request' && 'false' || 'true' }}
-    -
-      name: Export digest
-      if: ${{ github.event_name != 'pull_request'}}
+        outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=${{ (github.event_name != 'pull_request' &&  !github.event.release.prerelease) && 'true' || 'false' }}
+
+    - name: Export digest
+      if: ${{ github.event_name != 'pull_request' && !github.event.release.prerelease}}
       run: |
         mkdir -p /tmp/digests
         digest="${{ steps.build.outputs.digest }}"
         touch "/tmp/digests/${digest#sha256:}"
-    -
-      name: Upload digest
-      if: ${{ github.event_name != 'pull_request'}}
+
+    - name: Upload digest
+      if: ${{ github.event_name != 'pull_request' && !github.event.release.prerelease }}
       uses: actions/upload-artifact@v4
       with:
         name: digests-${{ env.PLATFORM_PAIR }}
@@ -74,19 +74,17 @@ jobs:
     needs:
       - release-ts
     steps:
-      -
-        name: Download digests
+      - name: Download digests
         uses: actions/download-artifact@v4
         with:
           path: /tmp/digests
           pattern: digests-*
           merge-multiple: true
-      -
-        name: Set up Docker Buildx
+
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      -
-        name: Docker meta
+      - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -100,13 +98,12 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      -
-        name: Create manifest list and push
+      - name: Create manifest list and push
         working-directory: /tmp/digests
         run: |
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
             $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)
-      -
-        name: Inspect image
+
+      - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }}

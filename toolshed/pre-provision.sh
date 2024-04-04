@@ -24,6 +24,8 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -y install unzip
 apt-get -y install zip
+apt-get -y install debconf
+
 
 # setup locales in the container so Python can default to utf-8.
 apt-get -y install locales

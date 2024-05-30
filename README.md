@@ -25,12 +25,13 @@ like [libcanard](https://github.com/OpenCyphal/libcanard) and
 
 | tag      | Python | Gcc | Clang | Cmake | Platforms | Other Utilities |
 |----------|--------|-----|-------|-------|-----------|-----------------|
-| [ts22.4.7](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 12.3.0 | 18.1.3 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>govr</li></ul>
-| [ts22.4.6](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.4.0 | 18.0.0 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>govr</li></ul>
-| [ts22.4.5](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.4.0 | 18.0.0 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.9.6</li><li>nvm</li><li>node 16.20.0</li><li>nox</li><li>govr</li></ul>
-| [ts22.4.3](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.9.6</li><li>nvm</li><li>node 16.20.0</li><li>nox</li><li>govr</li></ul>
-| [ts22.4.2](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>~~sonar-scanner~~</li><li>doxygen 1.9.6</li><li>nvm</li><li>node 16.20.0</li></ul>
-| [ts22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>sonar-scanner</li><li>doxygen 1.9.6</li></ul>
+| [ts22.4.8](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 12.3.0 | 18.1.3 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>govr</li><li>gcc-multilib (amd64 only)</li></ul> |
+| [ts22.4.7](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 12.3.0 | 18.1.3 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>govr</li></ul> |
+| [ts22.4.6](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.4.0 | 18.0.0 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>govr</li></ul> |
+| [ts22.4.5](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.4.0 | 18.0.0 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.9.6</li><li>nvm</li><li>node 16.20.0</li><li>nox</li><li>govr</li></ul> |
+| [ts22.4.3](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.9.6</li><li>nvm</li><li>node 16.20.0</li><li>nox</li><li>govr</li></ul> |
+| [ts22.4.2](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>~~sonar-scanner~~</li><li>doxygen 1.9.6</li><li>nvm</li><li>node 16.20.0</li></ul> |
+| [ts22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 11.3.0 | 15.0.7 | 3.22.1 | <ul><li>linux/amd64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>sonar-scanner</li><li>doxygen 1.9.6</li></ul> |
 
 
 

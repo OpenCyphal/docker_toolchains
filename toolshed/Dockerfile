@@ -7,6 +7,8 @@ LABEL org.opencontainers.image.source=https://github.com/OpenCyphal/docker_toolc
 LABEL org.opencontainers.image.description="Provides a consistent build and test environment for development, continuous-integration, and test automation of OpenCyphal C and C++ based projects."
 LABEL org.opencontainers.image.licenses=MIT
 
+ARG TARGETARCH
+
 VOLUME /repo
 
 WORKDIR /repo
@@ -23,10 +25,12 @@ FROM base AS provisioning
 WORKDIR /tmp
 ADD pre-provision.sh ./pre-provision.sh
 ADD provision.sh ./provision.sh
+ADD provision-${TARGETARCH}.sh ./provision-${TARGETARCH}.sh
 ADD post-provision.sh ./post-provision.sh
 
 RUN ./pre-provision.sh
 RUN ./provision.sh
+RUN ./provision-${TARGETARCH}.sh
 RUN ./post-provision.sh
 
 # INSTALL THE PATH FOR INTERATIVE SESSIONS

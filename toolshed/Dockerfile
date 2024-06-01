@@ -123,7 +123,8 @@ FROM doxygen AS gcc-select
 WORKDIR /tmp
 
 ADD gcc-select.sh ./gcc-select.sh
-RUN ./gcc-select.sh 12
+RUN ./gcc-select.sh 11 1
+RUN ./gcc-select.sh 12 99
 RUN update-alternatives --display gcc
 
 # LEAVE THE WORKDIR AS /repo

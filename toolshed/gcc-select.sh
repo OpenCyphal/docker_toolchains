@@ -18,7 +18,7 @@ setup_gcc_alternatives()
     update-alternatives ${cmdln}
 }
 
-GCC_ALTERNATIVES_PRI=99
+GCC_ALTERNATIVES_PRI=${2}
 GCC_ALTERNATIVES_PATH="/usr/bin/"
 
 # setup gcc group

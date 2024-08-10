@@ -23,12 +23,15 @@ ENV LC_ALL=en_US.UTF-8
 # +---------------------------------------------------------------------------+
 FROM base AS provisioning
 WORKDIR /tmp
+ADD kitware-archive-latest.asc .
 ADD pre-provision.sh ./pre-provision.sh
 ADD provision.sh ./provision.sh
 ADD provision-${TARGETARCH}.sh ./provision-${TARGETARCH}.sh
 ADD post-provision.sh ./post-provision.sh
 
+RUN apt update
 RUN ./pre-provision.sh
+RUN apt update
 RUN ./provision.sh
 RUN ./provision-${TARGETARCH}.sh
 RUN ./post-provision.sh
@@ -127,6 +130,35 @@ RUN ./gcc-select.sh 11 1
 RUN ./gcc-select.sh 12 99
 RUN update-alternatives --display gcc
 
+# +---------------------------------------------------------------------------+
+# | arm-none-eabi-gcc
+# +---------------------------------------------------------------------------+
+FROM gcc-select AS arm-none-eabi-arm64
+ARG GCC_HOST_VERSION=aarch64
+
+FROM gcc-select AS arm-none-eabi-amd64
+ARG GCC_HOST_VERSION=x86_64
+
+FROM arm-none-eabi-${TARGETARCH} AS arm-none-eabi
+WORKDIR /tmp
+COPY cached-download.sh .
+
+ARG ARM_NONE_EABI_VERSION=13.3.rel1
+ARG ARM_NONE_EABI_CHECKSUM_FILE=arm-gnu-toolchain-${ARM_NONE_EABI_VERSION}-${GCC_HOST_VERSION}-arm-none-eabi.tar.xz.sha256asc
+
+COPY ${ARM_NONE_EABI_CHECKSUM_FILE} .
+RUN --mount=type=cache,target=/arm-none-eabi-download \
+    ./cached-download.sh \
+    --cache-target "/arm-none-eabi-download" \
+    --download-url "https://developer.arm.com/-/media/Files/downloads/gnu/${ARM_NONE_EABI_VERSION}/binrel/arm-gnu-toolchain-${ARM_NONE_EABI_VERSION}-${GCC_HOST_VERSION}-arm-none-eabi.tar.xz" \
+    --download-to-file "/arm-none-eabi-download/arm-gnu-toolchain-${ARM_NONE_EABI_VERSION}-${GCC_HOST_VERSION}-arm-none-eabi.tar.xz" \
+    --checksums "/tmp/${ARM_NONE_EABI_CHECKSUM_FILE}" \
+    --algorithm 256 \
+    --unpack-dir "/opt"
+
+ADD arm-none-eabi-gcc-select.sh ./arm-none-eabi-gcc-select.sh
+RUN ./arm-none-eabi-gcc-select.sh 13.3.1 1 /opt/arm-gnu-toolchain-${ARM_NONE_EABI_VERSION}-${GCC_HOST_VERSION}-arm-none-eabi/bin/
+RUN update-alternatives --display arm-none-eabi-gcc
+
 # LEAVE THE WORKDIR AS /repo
 WORKDIR /repo
-

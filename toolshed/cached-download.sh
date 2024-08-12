@@ -22,6 +22,7 @@ echo_usage() {
     echo "  -d, --download-url URL          URL to download"
     echo "  -f, --download-to-file NAME     The filename to output the download to"
     echo "  -s, --checksums FILE            Checksums file"
+    echo "  -a, --algorithm 512 (default)   224, 256, 384, 512, 512224, 512256"
     echo "  -u, --unpack-dir DIR            Unpack directory"
     echo "  -t, --tar-args ARGS (optional)  Additional arguments for (un)tar command"
     echo "  -h, --help                      Show help message"
@@ -29,13 +30,14 @@ echo_usage() {
 
 # Check if any required option is unset (except help)
 check_options() {
-    if [[ -z $cache_target || -z $download_url || -z $download_to_file || -z $checksums_file || -z $unpack_dir ]]; then
+    if [[ -z $cache_target || -z $download_url || -z $download_to_file || -z $checksums_file ]]; then
         echo "Error: Missing required options"
         echo_usage
         exit 1
     fi
 }
 
+algorithm="512"
 tar_args=""
 
 # Parse command line arguments
@@ -72,6 +74,11 @@ while [[ $# -gt 0 ]]; do
         shift
         shift
         ;;
+        -a|--algorithm)
+        algorithm="$2"
+        shift
+        shift
+        ;;
         -h|--help)
         echo_usage
         exit 0
@@ -89,5 +96,10 @@ check_options
 
 cd "$cache_target"
 wget --no-config --show-progress --progress=bar:noscroll:force -O "$download_to_file" "$download_url"
-sha512sum -c "$checksums_file"
+shasum -a $algorithm -c "$checksums_file"
+
+if [[ -z $unpack_dir ]]; then
+echo "No --unpack-dir provided. Skipping untar step."
+else
 tar -xvf "$download_to_file" $tar_args -C "$unpack_dir"
+fi

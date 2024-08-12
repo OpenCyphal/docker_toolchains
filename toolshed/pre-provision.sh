@@ -21,18 +21,23 @@ set -o pipefail
 # +----------------------------------------------------------+
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get update
+apt-get -y install lsb-release
 apt-get -y install unzip
 apt-get -y install zip
 apt-get -y install debconf
+apt-get -y install wget
+apt-get -y install gpg
 
+cat kitware-archive-latest.asc
+cat kitware-archive-latest.asc | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+
+apt-get -y install software-properties-common
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6AF7F09730B3F0A4
+apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'
+add-apt-repository -y ppa:deadsnakes/ppa
 
 # setup locales in the container so Python can default to utf-8.
 apt-get -y install locales
 # from http://jaredmarkell.com/docker-and-locales/
 locale-gen en_US.UTF-8
 # See Dockerfile for exports
-
-apt-get -y install software-properties-common
-add-apt-repository -y ppa:deadsnakes/ppa
-apt-get update

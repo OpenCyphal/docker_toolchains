@@ -157,7 +157,7 @@ RUN --mount=type=cache,target=/arm-none-eabi-download \
     --unpack-dir "/opt"
 
 ADD arm-none-eabi-gcc-select.sh ./arm-none-eabi-gcc-select.sh
-RUN ./arm-none-eabi-gcc-select.sh 13.3.1 1 /opt/arm-gnu-toolchain-${ARM_NONE_EABI_VERSION}-${GCC_HOST_VERSION}-arm-none-eabi/bin/
+RUN ./arm-none-eabi-gcc-select.sh 1 /opt/arm-gnu-toolchain-${ARM_NONE_EABI_VERSION}-${GCC_HOST_VERSION}-arm-none-eabi/bin/
 RUN update-alternatives --display arm-none-eabi-gcc
 
 # LEAVE THE WORKDIR AS /repo

@@ -22,6 +22,7 @@ set -o pipefail
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get -y install apt-utils
+apt-get -y install moreutils
 apt-get -y install python3.10
 apt-get -y install python3-pip
 apt-get -y install cmake

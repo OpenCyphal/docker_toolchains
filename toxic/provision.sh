@@ -26,30 +26,3 @@ apt-get -y install git
 apt-get -y install curl
 apt-get -y install wget
 apt-get -y install unzip
-
-# deadsnakes maintains a bunch of python versions for Ubuntu.
-add-apt-repository -y ppa:deadsnakes/ppa
-apt-get update
-apt-get -y install python3.10
-apt-get -y install python3-pip
-
-apt-get -y install python3.7
-apt-get -y install python3.7-distutils
-apt-get -y install python3.8
-apt-get -y install python3.8-distutils
-apt-get -y install python3.9
-apt-get -y install python3.9-distutils
-apt-get -y install python3.11
-apt-get -y install python3.11-distutils
-apt-get -y install python3.12
-apt-get -y install python3.12-distutils
-
-
-pip3 install tox
-pip3 install nox
-
-echo "export PATH=$PATH" >> ~/.bashrc
-echo "export LANG=en_US.UTF-8" >> ~/.bashrc
-echo "export LANGUAGE=en_US:en" >> ~/.bashrc
-echo "export LC_ALL=en_US.UTF-8" >> ~/.bashrc
-echo "alias la=\"ls -lah\"" >> ~/.bashrc

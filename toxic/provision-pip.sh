@@ -19,12 +19,9 @@ set -o errexit
 set -o pipefail
 
 # +----------------------------------------------------------+
+export DEBIAN_FRONTEND=noninteractive
 
-# INSTALL THE PATH FOR INTERACTIVE SESSIONS
-echo "export PATH=$PATH" >> ~/.bashrc
+apt-get -y install python3-pip
 
-echo "export LANG=en_US.UTF-8" >> ~/.bashrc
-echo "export LANGUAGE=en_US:en" >> ~/.bashrc
-echo "export LC_ALL=en_US.UTF-8" >> ~/.bashrc
-
-echo "alias la=\"ls -lah\"" >> ~/.bashrc
+pip3 install tox
+pip3 install nox

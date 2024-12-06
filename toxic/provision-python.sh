@@ -4,12 +4,6 @@
 # | BASH : Modifying Shell Behaviour
 # |    (https://www.gnu.org/software/bash/manual)
 # +----------------------------------------------------------+
-# Treat unset variables and parameters other than the special
-# parameters ‘@’ or ‘*’ as an error when performing parameter
-# expansion. An error message will be written to the standard
-# error, and a non-interactive shell will exit.
-set -o nounset
-
 # Exit immediately if a pipeline returns a non-zero status.
 set -o errexit
 
@@ -19,12 +13,12 @@ set -o errexit
 set -o pipefail
 
 # +----------------------------------------------------------+
+export DEBIAN_FRONTEND=noninteractive
 
-# INSTALL THE PATH FOR INTERACTIVE SESSIONS
-echo "export PATH=$PATH" >> ~/.bashrc
+apt-get -y install python$1
 
-echo "export LANG=en_US.UTF-8" >> ~/.bashrc
-echo "export LANGUAGE=en_US:en" >> ~/.bashrc
-echo "export LC_ALL=en_US.UTF-8" >> ~/.bashrc
+if [[ $3 == distutils ]]; then
+    apt-get -y install python$1-distutils
+fi
 
-echo "alias la=\"ls -lah\"" >> ~/.bashrc
+update-alternatives --install /usr/bin/python3 python3 /usr/bin/python$1 $2

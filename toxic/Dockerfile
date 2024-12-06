@@ -22,11 +22,21 @@ FROM base AS provisioning
 WORKDIR /tmp
 ADD pre-provision.sh ./pre-provision.sh
 ADD provision.sh ./provision.sh
+ADD provision-python.sh ./provision-python.sh
+ADD provision-pip.sh ./provision-pip.sh
 ADD post-provision.sh ./post-provision.sh
 
 RUN ./pre-provision.sh
 RUN ./provision.sh
-RUN ./pre-provision.sh
+RUN ./provision-python.sh 3.8  6 distutils
+RUN ./provision-python.sh 3.9  5 distutils
+RUN ./provision-python.sh 3.10 4 distutils
+RUN ./provision-python.sh 3.11 3 distutils
+RUN ./provision-python.sh 3.12 1 distutils
+RUN ./provision-python.sh 3.13 2
+RUN update-alternatives --set python3 /usr/bin/python3.11
+RUN ./provision-pip.sh
+RUN ./post-provision.sh
 
 
 
@@ -34,9 +44,6 @@ RUN ./pre-provision.sh
 # | FINALIZE
 # +---------------------------------------------------------------------------+
 FROM provisioning AS all
-
-# INSTALL THE PATH FOR INTERATIVE SESSIONS
-RUN echo "export PATH=$PATH" >> ~/.bashrc
 
 # LEAVE THE WORKDIR AS /repo
 WORKDIR /repo

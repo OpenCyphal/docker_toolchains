@@ -19,4 +19,8 @@ set -o errexit
 set -o pipefail
 
 # +----------------------------------------------------------+
+export DEBIAN_FRONTEND=noninteractive
+
+# For GCC7
+apt-add-repository 'deb https://ports.ubuntu.com/ubuntu-ports focal main universe'
 

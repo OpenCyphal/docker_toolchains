@@ -19,4 +19,13 @@ set -o errexit
 set -o pipefail
 
 # +----------------------------------------------------------+
+export DEBIAN_FRONTEND=noninteractive
 
+cat kitware-archive-latest.asc
+cat kitware-archive-latest.asc | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+
+apt-get -y install software-properties-common
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 16FAAD7AF99A65E2
+apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'
+
+add-apt-repository -y ppa:deadsnakes/ppa

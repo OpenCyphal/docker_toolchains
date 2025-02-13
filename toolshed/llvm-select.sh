@@ -20,7 +20,7 @@ setup_llvm_alternatives()
     update-alternatives ${cmdln}
 }
 
-LLVM_ALTERNATIVES_PRI=99
+LLVM_ALTERNATIVES_PRI=${2}
 LLVM_ALTERNATIVES_PATH="/usr/bin/"
 
 # setup llvm-config group

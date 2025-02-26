@@ -28,14 +28,6 @@ apt-get -y install debconf
 apt-get -y install wget
 apt-get -y install gpg
 
-cat kitware-archive-latest.asc
-cat kitware-archive-latest.asc | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
-
-apt-get -y install software-properties-common
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6AF7F09730B3F0A4
-apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'
-add-apt-repository -y ppa:deadsnakes/ppa
-
 # setup locales in the container so Python can default to utf-8.
 apt-get -y install locales
 # from http://jaredmarkell.com/docker-and-locales/

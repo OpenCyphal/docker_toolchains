@@ -127,7 +127,9 @@ LLVM_VERSION_PATTERNS[15]="-15"
 LLVM_VERSION_PATTERNS[16]="-16"
 LLVM_VERSION_PATTERNS[17]="-17"
 LLVM_VERSION_PATTERNS[18]="-18"
-LLVM_VERSION_PATTERNS[19]=""
+LLVM_VERSION_PATTERNS[19]="-19"
+LLVM_VERSION_PATTERNS[20]="-20"
+LLVM_VERSION_PATTERNS[21]=""
 
 if [ ! ${LLVM_VERSION_PATTERNS[$LLVM_VERSION]+_} ]; then
     echo "This script does not support LLVM version $LLVM_VERSION"
@@ -161,9 +163,15 @@ fi
 
 if [[ -z "`apt-key list 2> /dev/null | grep -i llvm`" ]]; then
     # Delete the key in the old format
-    apt-key del AF4F7421
+    apt-key del AF4F7421 || true
 fi
-add-apt-repository "${REPO_NAME}"
+if [[ "${VERSION_CODENAME}" == "bookworm" ]]; then
+    # add it twice to workaround:
+    # https://github.com/llvm/llvm-project/issues/62475
+    add-apt-repository -y "${REPO_NAME}"
+fi
+
+add-apt-repository -y "${REPO_NAME}"
 apt-get update
 PKG="clang-$LLVM_VERSION lldb-$LLVM_VERSION lld-$LLVM_VERSION clangd-$LLVM_VERSION"
 if [[ $ALL -eq 1 ]]; then

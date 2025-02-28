@@ -27,7 +27,9 @@ jobs:
       with:
         tagRegex: "(${{ env.IMAGE_VERSION_PREFIX }}).*"
     - name: dryrun-build
-      if: ${{ ( github.event_name == 'pull_request' &&  contains(github.event.head_commit.message, '#te') ) || ( github.event_name == 'release' && startsWith( steps.process_event.outputs.tag, env.IMAGE_VERSION_PREFIX ) && github.event.release.prerelease ) }}
+      if: >
+          ( github.event_name == 'pull_request' && contains(github.event.pull_request.title, '#te')) ||
+          ( github.event_name == 'release' && startsWith(github.ref, 'refs/tags/te'))
       run: docker build ./${{ env.IMAGE_NAME }}
     - name: build-and-push
       if: ${{ github.event_name == 'release' && startsWith( steps.process_event.outputs.tag, env.IMAGE_VERSION_PREFIX ) && !github.event.release.prerelease }}

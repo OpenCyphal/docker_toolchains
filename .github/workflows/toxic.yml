@@ -13,7 +13,7 @@ env:
 
 jobs:
   release-tx:
-    if: ${{ github.event_name == 'pull_request' || ( github.event_name == 'release' && startsWith( github.ref, 'refs/tags/tx') ) }}
+    if: ${{ ( github.event_name == 'pull_request' && contains(github.event.head_commit.message, '#tx') ) || ( github.event_name == 'release' && startsWith( github.ref, 'refs/tags/tx') ) }}
     runs-on: ubuntu-latest
     strategy:
       matrix:

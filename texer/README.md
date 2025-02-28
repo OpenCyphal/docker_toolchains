@@ -10,6 +10,8 @@ that starts with `te`, uses the Ubuntu major and minor version, and uses an mono
 For example `te20.4.1`will cause the Github workflow to rebuild and push the `opencyphal/texer` container with the
 tag `te20.4.1`.
 
+When submitting a pull-request, include `#te` in the commit message to trigger the pull-request CI.
+
 ***PLEASE UPDATE THE TOP-LEVEL README.md FOR EACH NEW RELEASE***
 
 ## Manual Build and Push

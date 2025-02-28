@@ -10,6 +10,8 @@ that starts with `tx`, uses the Ubuntu major and minor version, and uses an mono
 For example `tx22.4.1`will cause the Github workflow to rebuild and push the `opencyphal/toxic` container with the
 tag `tx22.4.1`.
 
+When submitting a pull-request, include `#tx` in the commit message to trigger the pull-request CI.
+
 ***PLEASE UPDATE THE TOP-LEVEL README.md FOR EACH NEW RELEASE***
 
 ## Manual Build and Push

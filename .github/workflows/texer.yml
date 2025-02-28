@@ -17,6 +17,9 @@ jobs:
   build_and_publish:
 
     runs-on: ubuntu-latest
+    if: >
+          ( github.event_name == 'pull_request' && contains(github.event.pull_request.title, '#te')) ||
+          ( github.event_name == 'release' && startsWith(github.ref, 'refs/tags/te'))
 
     steps:
     - uses: actions/checkout@v3
@@ -27,12 +30,12 @@ jobs:
       with:
         tagRegex: "(${{ env.IMAGE_VERSION_PREFIX }}).*"
     - name: dryrun-build
-      if: >
-          ( github.event_name == 'pull_request' && contains(github.event.pull_request.title, '#te')) ||
-          ( github.event_name == 'release' && startsWith(github.ref, 'refs/tags/te'))
       run: docker build ./${{ env.IMAGE_NAME }}
     - name: build-and-push
-      if: ${{ github.event_name == 'release' && startsWith( steps.process_event.outputs.tag, env.IMAGE_VERSION_PREFIX ) && !github.event.release.prerelease }}
+      if: >
+        github.event_name == 'release' &&
+        startsWith( steps.process_event.outputs.tag, env.IMAGE_VERSION_PREFIX ) &&
+        !github.event.release.prerelease
       uses: macbre/push-to-ghcr@master
       with:
         context: ./${{ env.IMAGE_NAME }}

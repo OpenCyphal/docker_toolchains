@@ -57,6 +57,8 @@ RUN echo "export PATH=/root/.local/bin:$PATH" >> ~/.bashrc
 RUN pipx install tox
 RUN pipx install nox
 RUN pipx install gcovr
+RUN pipx install yakut
+RUN git clone --depth 1 https://github.com/OpenCyphal/public_regulated_data_types.git ~/public_regulated_data_types
 
 # LEAVE THE WORKDIR AS /repo
 WORKDIR /repo

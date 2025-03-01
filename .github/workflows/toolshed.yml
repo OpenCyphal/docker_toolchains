@@ -49,13 +49,18 @@ jobs:
 
     - name: Build and push by digest
       id: build
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         context: toolshed
         platforms: ${{ matrix.platform }}
-        labels: ${{ steps.meta.outputs.labels }}
         annotations: ${{ steps.meta.outputs.annotations }}
-        outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=${{ (github.event_name != 'pull_request' &&  !github.event.release.prerelease) && 'true' || 'false' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        outputs: >
+          type=image,
+          name=${{ env.REGISTRY_IMAGE }},
+          push-by-digest=true,
+          name-canonical=true,
+          push=${{ (github.event_name != 'pull_request' &&  !github.event.release.prerelease) && 'true' || 'false' }}
 
     - name: Export digest
       if: ${{ github.event_name != 'pull_request' && !github.event.release.prerelease}}
@@ -110,13 +115,18 @@ jobs:
 
     - name: Build and push by digest
       id: build
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         context: toolshed
         platforms: ${{ matrix.platform }}
-        labels: ${{ steps.meta.outputs.labels }}
         annotations: ${{ steps.meta.outputs.annotations }}
-        outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=${{ (github.event_name != 'pull_request' &&  !github.event.release.prerelease) && 'true' || 'false' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        outputs: >
+          type=image,
+          name=${{ env.REGISTRY_IMAGE }},
+          push-by-digest=true,
+          name-canonical=true,
+          push=${{ (github.event_name != 'pull_request' &&  !github.event.release.prerelease) && 'true' || 'false' }}
 
     - name: Export digest
       if: ${{ github.event_name != 'pull_request' && !github.event.release.prerelease}}

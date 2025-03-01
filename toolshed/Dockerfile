@@ -43,30 +43,10 @@ RUN ./post-provision.sh
 # INSTALL THE PATH FOR INTERACTIVE SESSIONS
 RUN echo "export PATH=$PATH" >> ~/.bashrc
 
-# LEAVE THE WORKDIR AS /repo
-WORKDIR /repo
-
-# +---------------------------------------------------------------------------+
-# | INSTALL PYTHON STUFF
-# +---------------------------------------------------------------------------+
-FROM provisioning AS python
-WORKDIR /tmp
-
-RUN apt-get -y install pipx
-RUN echo "export PATH=/root/.local/bin:$PATH" >> ~/.bashrc
-RUN pipx install tox
-RUN pipx install nox
-RUN pipx install gcovr
-RUN pipx install yakut
-RUN git clone --depth 1 https://github.com/OpenCyphal/public_regulated_data_types.git ~/public_regulated_data_types
-
-# LEAVE THE WORKDIR AS /repo
-WORKDIR /repo
-
 # +---------------------------------------------------------------------------+
 # | LLVM
 # +---------------------------------------------------------------------------+
-FROM python AS llvm
+FROM provisioning AS llvm
 WORKDIR /tmp
 
 ADD llvm-install.sh ./llvm-install.sh
@@ -75,9 +55,6 @@ RUN ./llvm-install.sh 18 all
 RUN ./llvm-select.sh 18 18
 RUN ./llvm-install.sh 19 all
 RUN ./llvm-select.sh 19 99
-
-# LEAVE THE WORKDIR AS /repo
-WORKDIR /repo
 
 # +---------------------------------------------------------------------------+
 # | DOXYGEN BUILD (PARALLEL)
@@ -109,9 +86,6 @@ RUN cmake --install .
 WORKDIR /tmp
 RUN rm -rf doxygen-Release
 
-# LEAVE THE WORKDIR AS /repo
-WORKDIR /repo
-
 # +---------------------------------------------------------------------------+
 # | GCC::native
 # +---------------------------------------------------------------------------+
@@ -140,7 +114,7 @@ FROM arm-none-eabi-${TARGETARCH} AS arm-none-eabi
 WORKDIR /tmp
 COPY cached-download.sh .
 
-ARG ARM_NONE_EABI_VERSION=13.3.rel1
+ARG ARM_NONE_EABI_VERSION=14.2.rel1
 ARG ARM_NONE_EABI_CHECKSUM_FILE=arm-gnu-toolchain-${ARM_NONE_EABI_VERSION}-${GCC_HOST_VERSION}-arm-none-eabi.tar.xz.sha256asc
 
 COPY ${ARM_NONE_EABI_CHECKSUM_FILE} .
@@ -157,5 +131,41 @@ ADD arm-none-eabi-gcc-select.sh ./arm-none-eabi-gcc-select.sh
 RUN ./arm-none-eabi-gcc-select.sh 1 /opt/arm-gnu-toolchain-${ARM_NONE_EABI_VERSION}-${GCC_HOST_VERSION}-arm-none-eabi/bin/
 RUN update-alternatives --display arm-none-eabi-gcc
 
+# +---------------------------------------------------------------------------+
+# | GCC::native
+# +---------------------------------------------------------------------------+
+FROM arm-none-eabi AS jlink
+
+WORKDIR /tmp
+
+# From the forum: https://forum.segger.com/index.php/Thread/8953-SOLVED-J-Link-Linux-installer-fails-for-Docker-containers-Error-Failed-to-update/
+ADD JLink_Linux_V816_${TARGETARCH}.deb ./JLink_Linux_V816.deb
+RUN apt-get -y install libxcb-render-util0 libxcb-icccm4 libxcb-keysyms1 libxcb-image0 libxkbcommon0 libxkbcommon-x11-0
+RUN dpkg --unpack JLink_Linux_V816.deb \
+    && rm -f /var/lib/dpkg/info/jlink.postinst
+RUN dpkg --configure jlink
+RUN apt install -yf
+RUN echo "export PATH=/opt/SEGGER/JLink:$PATH" >> ~/.bashrc
+RUN rm JLink_Linux_V816.deb
+
+# +---------------------------------------------------------------------------+
+# | INSTALL PYTHON STUFF
+# +---------------------------------------------------------------------------+
+FROM jlink AS python
+WORKDIR /tmp
+
+RUN apt-get -y install pipx
+ENV PIPX_HOME=/opt/pipx
+ENV PIPX_BIN_DIR=/usr/local/bin
+RUN echo "export PATH=$PIPX_HOME:$PIPX_BIN_DIR:$PATH" >> ~/.bashrc
+RUN pipx install cowsay
+RUN pipx install tox
+RUN pipx install nox
+RUN pipx install gcovr
+RUN pipx install yakut
+RUN cowsay -t moo
+RUN git clone --depth 1 https://github.com/OpenCyphal/public_regulated_data_types.git ~/public_regulated_data_types
+
+# +---------------------------------------------------------------------------+# LEAVE THE WORKDIR AS /repo
 # LEAVE THE WORKDIR AS /repo
 WORKDIR /repo

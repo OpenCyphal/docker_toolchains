@@ -54,7 +54,6 @@ jobs:
         context: toolshed
         platforms: ${{ matrix.platform }}
         annotations: ${{ steps.meta.outputs.annotations }}
-        tags: ${{ steps.meta.outputs.tags }}
         outputs: >
           type=image,
           name=${{ env.REGISTRY_IMAGE }},
@@ -120,7 +119,6 @@ jobs:
         context: toolshed
         platforms: ${{ matrix.platform }}
         annotations: ${{ steps.meta.outputs.annotations }}
-        tags: ${{ steps.meta.outputs.tags }}
         outputs: >
           type=image,
           name=${{ env.REGISTRY_IMAGE }},

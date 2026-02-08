@@ -161,7 +161,7 @@ RUN echo "export PATH=$PIPX_HOME:$PIPX_BIN_DIR:$PATH" >> ~/.bashrc
 RUN pipx install cowsay
 RUN pipx install tox
 RUN pipx install nox
-RUN pipx install gcovr
+RUN pip install --break-system-packages gcovr
 RUN pipx install yakut
 RUN cowsay -t moo
 RUN git clone --depth 1 https://github.com/OpenCyphal/public_regulated_data_types.git ~/public_regulated_data_types

@@ -161,8 +161,6 @@ RUN echo "export PATH=$PIPX_HOME:$PIPX_BIN_DIR:$PATH" >> ~/.bashrc
 RUN pipx install cowsay
 RUN pipx install tox
 RUN pipx install nox
-# gcovr must be installed into system Python (not pipx) so python3 -m gcovr works in tooling that imports the module
-# from system site-packages; Ubuntu 24.04 enforces PEP 668 so --break-system-packages is required for this install.
 RUN pip install --break-system-packages gcovr
 RUN pipx install yakut
 RUN cowsay -t moo

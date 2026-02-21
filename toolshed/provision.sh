@@ -48,6 +48,7 @@ apt-get -y install g++-13
 apt-get -y install nodejs
 apt-get -y install npm
 apt-get -y install libpcap0.8-dev
+apt-get -y install libzstd-dev
 apt-get -y install net-tools
 apt-get -y install iproute2
 apt-get -y install cppcheck

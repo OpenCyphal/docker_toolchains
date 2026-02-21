@@ -16,6 +16,9 @@ WORKDIR /repo
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
+ENV LLVM_DIR=/usr/lib/llvm-19/lib/cmake/llvm
+ENV MLIR_DIR=/usr/lib/llvm-19/lib/cmake/mlir
+ENV CMAKE_PREFIX_PATH=/usr/lib/llvm-19
 
 
 # +---------------------------------------------------------------------------+
@@ -54,6 +57,7 @@ ADD llvm-select.sh ./llvm-select.sh
 RUN ./llvm-install.sh 18 all
 RUN ./llvm-select.sh 18 18
 RUN ./llvm-install.sh 19 all
+RUN apt-get -y install libmlir-19-dev mlir-19-tools
 RUN ./llvm-select.sh 19 99
 
 # +---------------------------------------------------------------------------+
@@ -163,6 +167,7 @@ RUN pipx install tox
 RUN pipx install nox
 RUN pip install --break-system-packages gcovr
 RUN pipx install yakut
+RUN pipx install lit
 RUN cowsay -t moo
 RUN git clone --depth 1 https://github.com/OpenCyphal/public_regulated_data_types.git ~/public_regulated_data_types
 

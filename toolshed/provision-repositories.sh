@@ -21,11 +21,22 @@ set -o pipefail
 # +----------------------------------------------------------+
 export DEBIAN_FRONTEND=noninteractive
 
-cat kitware-archive-latest.asc
-cat kitware-archive-latest.asc | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+apt-get -y install software-properties-common ca-certificates
 
-apt-get -y install software-properties-common
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 16FAAD7AF99A65E2
-apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'
+KITWARE_KEYRING="/usr/share/keyrings/kitware-archive-keyring.gpg"
+KITWARE_SOURCE_LIST="/etc/apt/sources.list.d/kitware.list"
+KITWARE_KEY_ASC="/tmp/kitware-archive-latest.asc"
+
+# Prefer the current upstream key in case the bundled key has expired.
+if wget -qO "${KITWARE_KEY_ASC}" "https://apt.kitware.com/keys/kitware-archive-latest.asc"; then
+    echo "Using Kitware key downloaded from apt.kitware.com"
+else
+    echo "Falling back to bundled Kitware key"
+    cp kitware-archive-latest.asc "${KITWARE_KEY_ASC}"
+fi
+
+gpg --dearmor < "${KITWARE_KEY_ASC}" > "${KITWARE_KEYRING}"
+chmod 0644 "${KITWARE_KEYRING}"
+echo "deb [signed-by=${KITWARE_KEYRING}] https://apt.kitware.com/ubuntu/ jammy main" > "${KITWARE_SOURCE_LIST}"
 
 add-apt-repository -y ppa:deadsnakes/ppa

@@ -14,6 +14,19 @@ When submitting a pull-request, include `#ts` in the commit message to trigger t
 
 ***PLEASE UPDATE THE TOP-LEVEL README.md FOR EACH NEW RELEASE***
 
+## Notes for `ts24.4.4`
+
+This build adds:
+- `libzstd-dev`
+- `libmlir-19-dev`
+- `mlir-19-tools`
+- Python package `lit`
+
+It also exports these defaults for CMake-based LLVM/MLIR builds:
+- `LLVM_DIR=/usr/lib/llvm-19/lib/cmake/llvm`
+- `MLIR_DIR=/usr/lib/llvm-19/lib/cmake/mlir`
+- `CMAKE_PREFIX_PATH=/usr/lib/llvm-19`
+
 ## Manual Build and Push
 
 These instructions are for maintainers with permissions to push to the
@@ -53,19 +66,19 @@ docker buildx use cyphalbuild
 ... then build the container:
 
 ```bash
-docker buildx build --platform linux/amd64,linux/arm64 --load -t ghcr.io/opencyphal/toolshed:ts22.4.x .
+docker buildx build --platform linux/amd64,linux/arm64 --load -t ghcr.io/opencyphal/toolshed:ts24.4.x .
 ```
 
 After this completes you'll see your image using the classic `docker images` command or the newer `buildx imagetools` command to inspect the multi-architecture manifest:
 
 ```
-docker buildx imagetools inspect ghcr.io/opencyphal/toolshed:ts22.4.x
+docker buildx imagetools inspect ghcr.io/opencyphal/toolshed:ts24.4.x
 ```
 
  Now you can login to the container to test it out:
 
 ```bash
-docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toolshed:ts22.4.x
+docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toolshed:ts24.4.x
 ```
 
 ### Push
@@ -73,7 +86,7 @@ docker run --rm -it -v ${PWD}:/repo ghcr.io/opencyphal/toolshed:ts22.4.x
 As with load, you need to re-build with a `--push` argument but you'll be using the cache so the build should be a no-op:
 
 ```bash
-docker buildx build --platform linux/amd64,linux/arm64 --push -t ghcr.io/opencyphal/toolshed:ts22.4.x .
+docker buildx build --platform linux/amd64,linux/arm64 --push -t ghcr.io/opencyphal/toolshed:ts24.4.x .
 ```
 
 ## More on Multi-Platform Builders

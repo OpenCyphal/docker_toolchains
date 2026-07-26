@@ -222,6 +222,55 @@ RUN lit --version
 RUN cowsay -t moo
 RUN git clone --depth 1 https://github.com/OpenCyphal/public_regulated_data_types.git ~/public_regulated_data_types
 
+# +---------------------------------------------------------------------------+
+# | INSTALL DAFNY
+# +---------------------------------------------------------------------------+
+# Installed from NuGet rather than from a GitHub release asset. Dafny publishes
+# prebuilt binaries for x64 Linux only -- there is no arm64 Linux build in any
+# release, including nightlies -- and this image ships both architectures. The
+# NuGet tool package is architecture-neutral IL, so it is the only route that
+# puts the same Dafny on both. The cost is the .NET SDK that `dotnet tool
+# install` requires.
+FROM python AS dafny
+WORKDIR /tmp
+
+ARG DAFNY_VERSION=4.11.0
+# Ubuntu 26.04 publishes .NET 10 and nothing older, so that is what is installed.
+# Adding Microsoft's apt repository to obtain the .NET 8 that Dafny targets would
+# pin this image to a runtime reaching end of life in November 2026.
+ARG DOTNET_SDK_VERSION=10.0
+
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+ENV DOTNET_NOLOGO=1
+# Dafny 4.11.0 ships as tools/net8.0/any -- architecture-neutral IL, but built
+# against .NET 8. A framework-dependent app rolls forward only within its own
+# major by default, so without this it refuses to start on a host that has only
+# .NET 10 and asks for an 8.x runtime that Ubuntu does not package.
+ENV DOTNET_ROLL_FORWARD=Major
+
+RUN apt-get -y install dotnet-sdk-${DOTNET_SDK_VERSION}
+
+# Dafny needs an SMT solver, and the NuGet package deliberately carries no native
+# binaries -- that is exactly why it works on both architectures. The GitHub
+# release zips bundle z3, but only for x64, so the distro package is the one
+# source that serves both. Dafny nominally pairs with z3 4.12.1; 4.13.3 was
+# measured to give identical results on the proofs this image is used for.
+RUN apt-get -y install z3
+
+# --tool-path rather than --global: a global install lands under $HOME and is
+# invisible to any other user the container runs as, which CI routinely does.
+RUN dotnet tool install --tool-path /opt/dafny dafny --version ${DAFNY_VERSION}
+ENV PATH=/opt/dafny:${PATH}
+RUN echo "export PATH=/opt/dafny:$PATH" >> ~/.bashrc
+
+# Verify a real proof obligation rather than just `--version`. Launching proves
+# only that the .NET roll-forward works; discharging an obligation additionally
+# proves the solver is present and callable, which is the part that silently
+# goes missing.
+RUN printf 'method Smoke(x: int) requires x > 0 ensures x + 1 > 1 { }\n' > /tmp/smoke.dfy \
+    && dafny verify /tmp/smoke.dfy \
+    && rm /tmp/smoke.dfy
+
 # +---------------------------------------------------------------------------+# LEAVE THE WORKDIR AS /repo
 # LEAVE THE WORKDIR AS /repo
 WORKDIR /repo

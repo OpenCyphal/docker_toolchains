@@ -12,10 +12,13 @@ setup_llvm_alternatives()
     local members=${4}
     local path=${5}
     local cmdln
+    local member
 
     cmdln="--verbose --install ${path}${group} ${group} ${path}${group}-${version} ${priority}"
     for member in ${members}; do
-        cmdln="${cmdln} --slave ${path}${member} ${member} ${path}${member}-${version}"
+        if [[ -x "${path}${member}-${version}" ]]; then
+            cmdln="${cmdln} --slave ${path}${member} ${member} ${path}${member}-${version}"
+        fi
     done
     update-alternatives ${cmdln}
 }

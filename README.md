@@ -21,17 +21,25 @@ is based on Ubuntu and provides the necessary compilers and utilities to build a
 like [libcanard](https://github.com/OpenCyphal/libcanard) and
 [Nunavut](https://github.com/OpenCyphal/nunavut).
 
+See [toolshed/README.md](toolshed/README.md) for build instructions and
+[toolshed/CHANGELOG.md](toolshed/CHANGELOG.md) for per-release notes.
+
 #### Supported Versions
 
 | tag      | Python | GCC (native) | GCC (arm-none-eabi) | Clang (native) | Cmake | Host Platforms | Other Utilities |
 |----------|--------|--------------|---------------------|----------------|-------|----------------|-----------------|
+| [ts26.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.14 | 15.2.0 | 14.2.rel1 | 22.1.2 | 4.2.3 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>Rust 1.93.1</li><li>Go 1.26</li><li>Node.js 22.22.1</li><li>TypeScript 5.2.2</li><li>Emscripten SDK 6.0.2</li><li>LLVM 22.1.2</li><li>MLIR 22.1.2</li><li>JLink V816</li><li>cppcheck</li><li>yakut</li><li>libpcap0.8-dev</li><li>network-tools</li><li>can-utils</li><li>doxygen 1.13.2</li><li>tox</li><li>nox</li><li>gcovr</li><li>lit</li><li>gcc-multilib (amd64 only)</li></ul> |
 | [ts24.4.3](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | <ul><li>3.12</li><li>3.10</li></ul> | <ul><li>13.3.0</li><li>12.3.0</li><li>11.4.0</li><li>10.5.0</li><li>7.5.0</li></ul>| 13.3.1 | <ul><li>19.1.7</li><li>18.1.8</li></ul> | 3.31.5 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>JLink V816</li><li>cppcheck-2.13</li><li>yakut 0.13.0</li><li>libpcap0.8-dev</li><li>network-tools</li><li>can-utils</li><li>doxygen 1.13.2</li><li>tox</li><li>nox</li><li>govr</li><li>gcc-multilib (amd64 only)</li></ul> |
 | [ts24.4.2](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | <ul><li>3.12</li><li>3.10</li></ul> | <ul><li>13.3.0</li><li>12.3.0</li><li>11.4.0</li><li>10.5.0</li><li>7.5.0</li></ul>| 13.3.1 | <ul><li>19.1.7</li><li>18.1.8</li></ul> | 3.31.5 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>yakut 0.13.0</li><li>libpcap0.8-dev</li><li>network-tools</li><li>can-utils</li><li>doxygen 1.13.2</li><li>gcc-multilib (amd64 only)</li></ul> |
-| [ts24.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | <ul><li>3.12</li><li>3.10</li></ul> | <ul><li>13.3.0</li><li>12.3.0</li><li>11.4.0</li><li>10.5.0</li><li>7.5.0</li></ul>| 13.3.1 | <ul><li>19.1.7</li><li>18.1.8</li></ul> | 3.31.5 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <li>can-utils</li><li>doxygen 1.13.2</li><li>tox</li><li>nox</li><li>govr</li><li>gcc-multilib (amd64 only)</li></ul> |
-| [ts22.4.10](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 12.3.0 | 13.3.1 | 18.1.3 | 3.30.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>govr</li><li>gcc-multilib (amd64 only)</li></ul> |
-| [ts22.4.8](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 12.3.0 | (N/A) | 18.1.3 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>govr</li><li>gcc-multilib (amd64 only)</li></ul> |
-| [ts22.4.7](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 12.3.0 | (N/A) | 18.1.3 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>govr</li></ul> |
+| [ts24.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | <ul><li>3.12</li><li>3.10</li></ul> | <ul><li>13.3.0</li><li>12.3.0</li><li>11.4.0</li><li>10.5.0</li></ul>| 13.3.1 | <ul><li>19.1.7</li><li>18.1.8</li></ul> | 3.31.5 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <li>can-utils</li><li>doxygen 1.13.2</li><li>tox</li><li>nox</li><li>gcovr</li><li>gcc-multilib (amd64 only)</li></ul> |
+| [ts22.4.10](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 12.3.0 | 13.3.1 | 18.1.3 | 3.30.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>gcovr</li><li>gcc-multilib (amd64 only)</li></ul> |
+| [ts22.4.8](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 12.3.0 | (N/A) | 18.1.3 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>gcovr</li><li>gcc-multilib (amd64 only)</li></ul> |
+| [ts22.4.7](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.10 | 12.3.0 | (N/A) | 18.1.3 | 3.22.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>qemu</li><li>can-utils</li><li>doxygen 1.10.0</li><li>nvm</li><li>node 20.x</li><li>nox</li><li>gcovr</li></ul> |
 
+Starting with `ts26.4.1`, the image sets:
+- `LLVM_DIR=/usr/lib/llvm-22/lib/cmake/llvm`
+- `MLIR_DIR=/usr/lib/llvm-22/lib/cmake/mlir`
+- `CMAKE_PREFIX_PATH=/usr/lib/llvm-22`
 
 You can use this in your workflow yaml like this:
 
@@ -39,7 +47,7 @@ You can use this in your workflow yaml like this:
 jobs:
   my-job:
     runs-on: ubuntu-latest
-    container: ghcr.io/opencyphal/toolshed:ts22.4.7
+    container: ghcr.io/opencyphal/toolshed:ts26.4.1
 ```
 
 

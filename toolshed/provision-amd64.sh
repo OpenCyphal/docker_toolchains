@@ -23,5 +23,3 @@ export DEBIAN_FRONTEND=noninteractive
 
 apt-get -y install gcc-multilib
 apt-get -y install g++-multilib
-apt-get -y install gcc-13-multilib
-apt-get -y install g++-13-multilib

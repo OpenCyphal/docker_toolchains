@@ -20,6 +20,3 @@ set -o pipefail
 
 # +----------------------------------------------------------+
 export DEBIAN_FRONTEND=noninteractive
-
-# For GCC7
-apt-add-repository 'deb http://archive.ubuntu.com/ubuntu/ focal main universe'

@@ -326,7 +326,8 @@ RUN mkdir -p /tmp/bazel-warm \
     && bazel shutdown \
     && cd /tmp \
     && rm -rf /tmp/bazel-warm \
-    && chmod -R a+rX "${BAZELISK_HOME}"
+    && chmod -R a+rwX "${BAZELISK_HOME}" \
+    && chmod 1777 "${BAZELISK_HOME}"
 
 # Build something rather than just running --version. Launching proves bazelisk
 # resolved a binary; building additionally proves that binary can execute an

@@ -271,6 +271,83 @@ RUN printf 'method Smoke(x: int) requires x > 0 ensures x + 1 > 1 { }\n' > /tmp/
     && dafny verify /tmp/smoke.dfy \
     && rm /tmp/smoke.dfy
 
-# +---------------------------------------------------------------------------+# LEAVE THE WORKDIR AS /repo
+# +---------------------------------------------------------------------------+
+# | INSTALL BAZEL
+# +---------------------------------------------------------------------------+
+# bazelisk rather than a Bazel release binary, and from GitHub rather than from
+# apt. Bazel's own apt repository publishes amd64 only, and this image ships both
+# architectures -- the same constraint that decided Dafny above. bazelisk
+# publishes linux/amd64 and linux/arm64, so it is the one route that serves both.
+#
+# Installing bazelisk as `bazel` is also what lets a project pin its own Bazel:
+# bazelisk reads .bazelversion from the workspace root and fetches that version.
+FROM dafny AS bazel
+WORKDIR /tmp
+COPY cached-download.sh .
+
+ARG BAZELISK_VERSION=1.29.0
+# The version pre-warmed into the image below. A project pinning this one gets it
+# without a download; any other version is fetched on first use.
+ARG BAZEL_VERSION=9.2.0
+
+# BAZELISK_HOME defaults to $HOME/.cache/bazelisk, which is invisible to any other
+# user the container runs as -- and CI routinely runs as one. A shared path, made
+# world-readable below, is what lets all of them use the pre-warmed Bazel. This is
+# the same trap `dotnet tool install --tool-path` avoids for Dafny.
+ENV BAZELISK_HOME=/opt/bazelisk
+
+ARG BAZELISK_CHECKSUM_FILE=bazelisk-${BAZELISK_VERSION}-linux-${TARGETARCH}.sha256
+COPY ${BAZELISK_CHECKSUM_FILE} .
+RUN --mount=type=cache,target=/bazelisk-download \
+    ./cached-download.sh \
+    --cache-target "/bazelisk-download" \
+    --download-url "https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-linux-${TARGETARCH}" \
+    --download-to-file "/bazelisk-download/bazelisk-linux-${TARGETARCH}" \
+    --checksums "/tmp/${BAZELISK_CHECKSUM_FILE}" \
+    --algorithm 256 \
+    && install -m 0755 "/bazelisk-download/bazelisk-linux-${TARGETARCH}" /usr/local/bin/bazel
+
+# Bazel itself is unpacked into BAZELISK_HOME here rather than on first use. The
+# throwaway workspace is what makes that happen: bazelisk honours .bazelversion
+# only at a workspace root, and with no workspace it resolves "latest" over the
+# network instead.
+#
+# Deliberately NOT setting USE_BAZEL_VERSION. That variable takes precedence over
+# a project's .bazelversion -- measured, not assumed -- so an image setting it
+# would silently build every project with this version whatever the project
+# pinned. A project that wants the pre-warmed Bazel commits `9.2.0` to its own
+# .bazelversion, which is where that decision belongs.
+RUN mkdir -p /tmp/bazel-warm \
+    && cd /tmp/bazel-warm \
+    && printf 'module(name = "warm", version = "0.0.1")\n' > MODULE.bazel \
+    && touch BUILD.bazel \
+    && echo "${BAZEL_VERSION}" > .bazelversion \
+    && bazel --version \
+    && bazel shutdown \
+    && cd /tmp \
+    && rm -rf /tmp/bazel-warm \
+    && chmod -R a+rwX "${BAZELISK_HOME}" \
+    && chmod 1777 "${BAZELISK_HOME}"
+
+# Build something rather than just running --version. Launching proves bazelisk
+# resolved a binary; building additionally proves that binary can execute an
+# action and write an output, which is the part that silently goes missing.
+#
+# This step needs network, and so will any real Bazel build: Bazel resolves even
+# its built-in module dependencies through the Bazel Central Registry, exactly as
+# npm, cargo, and pip in this image fetch theirs. The image supplies the
+# toolchain, not a hermetic dependency cache.
+RUN mkdir -p /tmp/bazel-smoke \
+    && cd /tmp/bazel-smoke \
+    && printf 'module(name = "smoke", version = "0.0.1")\n' > MODULE.bazel \
+    && printf 'genrule(name = "g", outs = ["o.txt"], cmd = "echo built > $@")\n' > BUILD.bazel \
+    && echo "${BAZEL_VERSION}" > .bazelversion \
+    && bazel build //:g \
+    && grep -q built bazel-bin/o.txt \
+    && bazel shutdown \
+    && cd /tmp \
+    && rm -rf /tmp/bazel-smoke
+
+# +---------------------------------------------------------------------------+
 # LEAVE THE WORKDIR AS /repo
 WORKDIR /repo

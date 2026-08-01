@@ -28,6 +28,7 @@ See [toolshed/README.md](toolshed/README.md) for build instructions and
 
 | tag      | Python | GCC (native) | GCC (arm-none-eabi) | Clang (native) | Cmake | Host Platforms | Other Utilities |
 |----------|--------|--------------|---------------------|----------------|-------|----------------|-----------------|
+| [ts26.4.3](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.14 | 15.2.0 | 14.2.rel1 | 22.1.2 | 4.2.3 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>Rust 1.93.1</li><li>Go 1.26</li><li>Node.js 22.22.1</li><li>TypeScript 5.2.2</li><li>Emscripten SDK 6.0.2</li><li>LLVM 22.1.2</li><li>MLIR 22.1.2</li><li>JLink V816</li><li>cppcheck</li><li>yakut</li><li>libpcap0.8-dev</li><li>network-tools</li><li>can-utils</li><li>doxygen 1.13.2</li><li>tox</li><li>nox</li><li>gcovr</li><li>lit</li><li>Dafny 4.11.0</li><li>.NET SDK 10.0</li><li>z3 4.13.3</li><li>Bazel 9.2.0 (bazelisk 1.29.0)</li><li>gcc-multilib (amd64 only)</li></ul> |
 | [ts26.4.2](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.14 | 15.2.0 | 14.2.rel1 | 22.1.2 | 4.2.3 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>Rust 1.93.1</li><li>Go 1.26</li><li>Node.js 22.22.1</li><li>TypeScript 5.2.2</li><li>Emscripten SDK 6.0.2</li><li>LLVM 22.1.2</li><li>MLIR 22.1.2</li><li>JLink V816</li><li>cppcheck</li><li>yakut</li><li>libpcap0.8-dev</li><li>network-tools</li><li>can-utils</li><li>doxygen 1.13.2</li><li>tox</li><li>nox</li><li>gcovr</li><li>lit</li><li>Dafny 4.11.0</li><li>.NET SDK 10.0</li><li>z3 4.13.3</li><li>gcc-multilib (amd64 only)</li></ul> |
 | [ts26.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | 3.14 | 15.2.0 | 14.2.rel1 | 22.1.2 | 4.2.3 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>Rust 1.93.1</li><li>Go 1.26</li><li>Node.js 22.22.1</li><li>TypeScript 5.2.2</li><li>Emscripten SDK 6.0.2</li><li>LLVM 22.1.2</li><li>MLIR 22.1.2</li><li>JLink V816</li><li>cppcheck</li><li>yakut</li><li>libpcap0.8-dev</li><li>network-tools</li><li>can-utils</li><li>doxygen 1.13.2</li><li>tox</li><li>nox</li><li>gcovr</li><li>lit</li><li>gcc-multilib (amd64 only)</li></ul> |
 | [ts24.4.3](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toolshed) | <ul><li>3.12</li><li>3.10</li></ul> | <ul><li>13.3.0</li><li>12.3.0</li><li>11.4.0</li><li>10.5.0</li><li>7.5.0</li></ul>| 13.3.1 | <ul><li>19.1.7</li><li>18.1.8</li></ul> | 3.31.5 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | <ul><li>JLink V816</li><li>cppcheck-2.13</li><li>yakut 0.13.0</li><li>libpcap0.8-dev</li><li>network-tools</li><li>can-utils</li><li>doxygen 1.13.2</li><li>tox</li><li>nox</li><li>govr</li><li>gcc-multilib (amd64 only)</li></ul> |
@@ -48,7 +49,7 @@ You can use this in your workflow yaml like this:
 jobs:
   my-job:
     runs-on: ubuntu-latest
-    container: ghcr.io/opencyphal/toolshed:ts26.4.2
+    container: ghcr.io/opencyphal/toolshed:ts26.4.3
 ```
 
 

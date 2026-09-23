@@ -63,3 +63,10 @@ apt-get -y install net-tools
 apt-get -y install iproute2
 apt-get -y install cppcheck
 apt-get -y install libncurses6
+
+rustc --version
+cargo --version
+go version
+node --version
+npm --version
+tsc --version

@@ -43,6 +43,21 @@ Use `--platform linux/amd64` on an Intel/AMD host. The default `docker` builder 
 sufficient for single-platform builds; you do not need the `cyphalbuild` builder
 described below.
 
+> **NOTE**
+>
+> If your active builder (`docker buildx ls` marks it with `*`) uses the
+> `docker-container` driver, building the `bazel` stage, or anything later in the chain, can hang for two minutes on the
+> `bazel build //:g` smoke-test step and fail with `FATAL: couldn't connect to server`.
+> Some `docker-container` builders run BuildKit with a sandboxed OCI process mode that
+> adds extra seccomp/namespace restrictions to every `RUN` step, which blocks the nested
+> mount/user namespace Bazel's default sandboxed execution strategy needs to start its
+> server. Check with `docker buildx inspect <builder-name>` — a
+> `worker.oci.process-mode: sandbox` label confirms it.
+>
+> This is a builder configuration issue, not a Dockerfile problem. Build with a plain
+> `docker`-driver builder instead, e.g. `docker buildx use default` (or `desktop-linux`
+> on Docker Desktop), or pass it explicitly with `--builder`.
+
 The full image takes a while to build: the doxygen stage compiles from source and the
 Emscripten stage downloads a complete SDK. To iterate on just one part of the build, stop
 at an intermediate stage with `--target`:

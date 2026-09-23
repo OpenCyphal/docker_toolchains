@@ -107,6 +107,7 @@ RUN git clone --depth 1 --branch ${EMSDK_VERSION} https://github.com/emscripten-
 RUN ${EMSDK}/emsdk install ${EMSDK_VERSION}
 RUN ${EMSDK}/emsdk activate ${EMSDK_VERSION}
 ENV PATH=${EMSDK}:${EMSDK}/upstream/emscripten:${PATH}
+RUN emcc --version
 
 # +---------------------------------------------------------------------------+
 # | DOXYGEN BUILD (PARALLEL)
@@ -208,19 +209,32 @@ RUN echo "export PATH=$PIPX_HOME:$PIPX_BIN_DIR:$PATH" >> ~/.bashrc
 RUN pipx install cowsay
 RUN pipx install tox
 RUN pipx install nox
+RUN pipx install ruff==0.16.8
 RUN pip install --break-system-packages gcovr
 RUN pipx install yakut
 RUN pipx install lit
-RUN rustc --version
-RUN cargo --version
-RUN go version
-RUN node --version
-RUN npm --version
-RUN tsc --version
-RUN emcc --version
 RUN lit --version
 RUN cowsay -t moo
 RUN git clone --depth 1 https://github.com/OpenCyphal/public_regulated_data_types.git ~/public_regulated_data_types
+
+# +---------------------------------------------------------------------------+
+# | INSTALL GOLANG STUFF
+# +---------------------------------------------------------------------------+
+FROM python AS golang
+WORKDIR /tmp
+
+RUN echo "export PATH=$PATH:$(go env GOPATH)/bin" >> ~/.bashrc
+RUN go install honnef.co/go/tools/cmd/staticcheck@2025.1.1
+RUN $(go env GOPATH)/bin/staticcheck --version
+
+# +---------------------------------------------------------------------------+
+# | INSTALL NODE STUFF
+# +---------------------------------------------------------------------------+
+FROM golang AS node
+WORKDIR /tmp
+
+RUN npm install -g eslint
+RUN eslint --version
 
 # +---------------------------------------------------------------------------+
 # | INSTALL DAFNY
@@ -231,7 +245,7 @@ RUN git clone --depth 1 https://github.com/OpenCyphal/public_regulated_data_type
 # NuGet tool package is architecture-neutral IL, so it is the only route that
 # puts the same Dafny on both. The cost is the .NET SDK that `dotnet tool
 # install` requires.
-FROM python AS dafny
+FROM node AS dafny
 WORKDIR /tmp
 
 ARG DAFNY_VERSION=4.11.0

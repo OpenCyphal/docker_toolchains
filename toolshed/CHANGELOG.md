@@ -3,6 +3,27 @@
 Per-release notes for the `ghcr.io/opencyphal/toolshed` image. The summary table of
 every published tag lives in the [top-level README](../README.md#opencyphaltoolshedts).
 
+## ts26.4.4
+
+Adds:
+
+- ruff 0.16.8, a Python linter
+- staticcheck 2025.1.1, a Go linter
+- eslint (unpinned; installs whatever is latest at build time), a Node.js/TypeScript
+  linter
+
+Installing the Go and Node.js linters splits what was a single `python` stage into
+three: `python` (unchanged) is now followed by `golang`, which adds `staticcheck`, and
+`node`, which adds `eslint`. `dafny` — and everything built on top of it, including
+`bazel` — now builds `FROM node` instead of `FROM python`. This only matters to a build
+pinning `--target` to one of these stage names; the final image is unaffected.
+
+Also moves the `rustc`/`cargo`/`go`/`node`/`npm`/`tsc` version checks out of the `python`
+stage and into `provision.sh`, immediately after the `apt-get install` lines that put
+those tools on the image, and gives Emscripten its own version check (`emcc --version`)
+in the `wasm` stage rather than `python`. Each toolchain's presence is now verified as
+soon as it is installed rather than several stages later.
+
 ## ts26.4.3
 
 Adds:

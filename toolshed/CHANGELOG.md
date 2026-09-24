@@ -3,6 +3,11 @@
 Per-release notes for the `ghcr.io/opencyphal/toolshed` image. The summary table of
 every published tag lives in the [top-level README](../README.md#opencyphaltoolshedts).
 
+## ts26.4.5
+
+Repairs a problem with the ts26.4.4's eslint installation. No other changes.
+
+
 ## ts26.4.4
 
 Adds:

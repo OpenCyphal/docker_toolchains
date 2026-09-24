@@ -233,7 +233,7 @@ RUN $(go env GOPATH)/bin/staticcheck --version
 FROM golang AS node
 WORKDIR /tmp
 
-RUN npm install -g eslint
+RUN npm install -g eslint@10 typescript-eslint
 RUN eslint --version
 
 # +---------------------------------------------------------------------------+

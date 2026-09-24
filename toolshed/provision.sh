@@ -63,6 +63,7 @@ apt-get -y install net-tools
 apt-get -y install iproute2
 apt-get -y install cppcheck
 apt-get -y install libncurses6
+apt-get -y autoremove
 
 rustc --version
 cargo --version

@@ -83,13 +83,17 @@ jobs:
 
 The [Open Cyphal toxic
 container](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic)
-is based on Ubuntu and provides all modern Python3 distributions, pip, tox, and nox. It can be used to develop, test, build, and release Python projects like [nunavut](https://github.com/OpenCyphal/nunavut), [pydsdl](https://github.com/OpenCyphal/pydsdl), and [pycyphal](https://github.com/OpenCyphal/pycyphal).
+is based on Ubuntu and provides supported Python 3 interpreters, pip, tox, and nox. It can be used to develop, test, build, and release Python projects like [nunavut](https://github.com/OpenCyphal/nunavut), [pydsdl](https://github.com/OpenCyphal/pydsdl), and [pycyphal](https://github.com/OpenCyphal/pycyphal).
+
+`tx26.4.1` uses Ubuntu 26.04 LTS with Python 3.14 as the default interpreter.
+See [toxic/README.md](toxic/README.md) for usage and build instructions.
 
 #### Supported Versions
 
 | tag      | Base Python | Python Versions | Tox | Nox | pip | Platforms | Other Utilities |
 |----------|-------------|-----------------|-----|-----|-----|-----------|-----------------|
-| [tx22.4.3](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.11 | 3.8, 3.9, 3.10, 3.11, 3.12 3.13 | 4.13.0 | 2023.4.22 | 20.0.2 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | |
+| [tx26.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.14 | 3.11, 3.12, 3.13, 3.14, 3.15 | 4.67.1 | 2026.8.17 | 25.1.1 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | |
+| [tx22.4.3](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.11 | 3.8, 3.9, 3.10, 3.11, 3.12, 3.13 | 4.13.0 | 2023.4.22 | 20.0.2 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | |
 | [tx22.4.2](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.10 | 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.13.0 | 2023.4.22 | 20.0.2 | <ul><li>linux/amd64</li><li>linux/arm64</li></ul> | |
 | [tx22.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | 2023.4.22 | 20.0.2 | <ul><li>linux/amd64</li></ul> | |
 | [tx20.4.1](https://github.com/OpenCyphal/docker_toolchains/pkgs/container/toxic) | 3.8 | 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 | 4.4.5 | (not available) | 20.0.2 | <ul><li>linux/amd64</li></ul> | <ul><li>sonar-scanner</li></ul> |
@@ -101,7 +105,7 @@ You can use this in your workflow yaml like this:
 jobs:
   my-job:
     runs-on: ubuntu-latest
-    container: ghcr.io/opencyphal/toxic:tx20.4.2
+    container: ghcr.io/opencyphal/toxic:tx26.4.1
 ```
 
 ---------------------------

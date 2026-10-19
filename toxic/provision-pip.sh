@@ -21,7 +21,13 @@ set -o pipefail
 # +----------------------------------------------------------+
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get -y install python3-pip
+apt-get -y install python3-pip pipx
 
-pip3 install tox
-pip3 install nox
+# Ubuntu's system Python is externally managed. Keep CLI tools in isolated
+# environments while exposing their entry points through PIPX_BIN_DIR.
+pipx install --python /usr/bin/python3.14 tox
+pipx install --python /usr/bin/python3.14 nox
+
+pip3 --version
+tox --version
+nox --version

@@ -15,10 +15,8 @@ set -o pipefail
 # +----------------------------------------------------------+
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get -y install python$1
+apt-get -y install "python${1}" "python${1}-venv"
 
-if [[ $3 == distutils ]]; then
-    apt-get -y install python$1-distutils
+if [[ ${2:-} == distutils ]]; then
+    apt-get -y install "python${1}-distutils"
 fi
-
-update-alternatives --install /usr/bin/python3 python3 /usr/bin/python$1 $2

@@ -5,23 +5,12 @@ for development, continuous-integration, and test automation of Python based pro
 
 ## Python support
 
-The Ubuntu 26.04 LTS image supports Python **3.11, 3.12, 3.13, 3.14, and 3.15**
-on `linux/amd64` and `linux/arm64`. Python 3.10 and older are no longer included
-because they have reached end of life. Previously published images retain their
-original interpreter sets.
+Based on Ubuntu 26.04 LTS, the image supports Python **3.11–3.15** on
+`linux/amd64` and `linux/arm64`. The default `python3`, `pip`, and `pip3` use
+**Python 3.14**, Ubuntu 26.04's [default Python version](https://packages.ubuntu.com/resolute/python3).
 
-The base interpreter (`python3`) is **Python 3.14**, Ubuntu 26.04's
-[default Python version](https://packages.ubuntu.com/resolute/python3).
-Use versioned commands such as `python3.11` and `python3.15`, or select these
-interpreters in tox/nox, to test across the supported versions. Additional
-interpreters come from the [deadsnakes PPA](https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa).
-Each interpreter includes its `venv` package.
-
-`pip`/`pip3` target the base Python 3.14 interpreter. Install project dependencies
-inside virtual environments (for example, `python3.15 -m venv .venv` followed by
-`.venv/bin/python -m pip install ...`). Ubuntu's system Python is externally
-managed; tox and nox are installed with pipx into isolated Python 3.14 environments
-and are available on `PATH`. Their versions are resolved when the image is built.
+Each interpreter includes `venv`; use versioned commands such as `python3.15 -m venv .venv`
+to create project environments. tox and nox are installed through pipx and available on `PATH`.
 
 ## Official Release
 
